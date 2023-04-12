@@ -1,5 +1,6 @@
 package com.example.homeschoolplatform.controller;
 
+import com.example.homeschoolplatform.entity.ApiResponse;
 import com.example.homeschoolplatform.entity.RegisterRequest;
 import com.example.homeschoolplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class RegisterController {
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         boolean result = userService.register(registerRequest);
         if (result) {
-            return new ResponseEntity<>("Registration successful", HttpStatus.CREATED);
+            return new ResponseEntity<>(new ApiResponse("Registration successful", HttpStatus.CREATED.value()), HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("Registration failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse("Registration failed", HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
     }
 }
