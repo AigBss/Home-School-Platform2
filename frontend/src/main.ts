@@ -5,17 +5,13 @@ import 'element-plus/dist/index.css';
 import App from './App.vue';
 
 import UserRegister from './views/UserRegister.vue';
-import UserDashboard from './views/UserDashboard.vue';
-import UserProfile from './views/UserProfile.vue';
 import UserLogin from '@/views/UserLogin.vue';
+import TestMe from '@/views/TestMe.vue';
 
 const routes = [
+
     {
         path: '/',
-        redirect: '/userdashboard',
-    },
-    {
-        path: '/userlogin',
         component: UserLogin,
     },
     {
@@ -23,15 +19,10 @@ const routes = [
         component: UserRegister,
     },
     {
-        path: '/userdashboard',
-        component: UserDashboard,
-        children: [
-            {
-                path: 'userprofile',
-                component: UserProfile,
-            },
-        ],
+        path: '/test',
+        component: TestMe,
     },
+
 ];
 
 const router = createRouter({

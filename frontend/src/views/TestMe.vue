@@ -3,7 +3,7 @@
     <el-main>
       <div class="login-container">
         <h1 class="login-title">登录</h1>
-        <el-form :model="loginForm" :rules="rules" label-width="80px">
+        <el-form  :model="loginForm" :rules="rules" label-width="80px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="loginForm.username" autocomplete="off"></el-input>
           </el-form-item>
@@ -11,16 +11,7 @@
             <el-input type="password" v-model="loginForm.password" autocomplete="new-password"></el-input>
           </el-form-item>
           <el-form-item>
-            <vue-drag-verify
-                ref="dragVerify"
-                @success="onDragVerifySuccess"
-                @refresh="onDragVerifyRefresh"
-            ></vue-drag-verify>
-          </el-form-item>
-          <el-form-item>
             <el-button type="success" round class="login-button" @click="submitForm('loginForm')">登录</el-button>
-            <el-button type="primary" round class="register-button" @click="switchToRegister">注册</el-button>
-
           </el-form-item>
         </el-form>
       </div>
@@ -30,22 +21,18 @@
 
 <script>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { ElForm, ElFormItem, ElInput, ElButton } from "element-plus";
-import { VueDragVerify } from "vue-drag-verify";
 import axios from "axios";
 
 export default {
-  name: "LoginWithDragVerify",
+  name: "LoginMe",
   components: {
     ElForm,
     ElFormItem,
     ElInput,
     ElButton,
-    VueDragVerify,
   },
   setup() {
-    const router = useRouter();
     const loginForm = ref({
       username: "",
       password: "",
@@ -73,37 +60,21 @@ export default {
           // 根据实际情况跳转到其他页面，例如：
           // router.push("/dashboard");
         } else {
-          console.log("登录失败");
+          console.log("登录失败：" + response.data.message);
         }
       } catch (error) {
         console.error("登录请求失败", error);
       }
     };
 
-    const switchToRegister = () => {
-      router.push("/userregister");
-    };
-
-    const onDragVerifySuccess = () => {
-      console.log("拖动验证成功");
-    };
-
-    const onDragVerifyRefresh = () => {
-      console.log("拖动验证刷新");
-    };
-
     return {
       loginForm,
       rules,
       submitForm,
-      switchToRegister,
-      onDragVerifySuccess,
-      onDragVerifyRefresh,
     };
   },
 };
 </script>
-
 
 <style scoped>
 .login-container {
@@ -111,23 +82,13 @@ export default {
   margin: 100px auto;
 }
 
-.login-button{
+.login-button {
   float: right;
   margin-left: 55%;
 }
-
-.register-button {
-  float: right;
-  margin-left: 20px;
-}
-
 
 .login-title {
   text-align: center;
   margin-bottom: 80px;
 }
 </style>
-
-
-
-

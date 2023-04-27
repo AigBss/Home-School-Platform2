@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(value = "com.example.homeschoolplatform")
+@MapperScan(value = "com.example.homeschoolplatform.mapper")
 public class HomeSchoolPlatformApplication {
 
     public static void main(String[] args) {

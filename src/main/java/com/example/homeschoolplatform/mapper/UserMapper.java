@@ -25,7 +25,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    @Select("SELECT * FROM users WHERE username = #{username}")
+    @Select("SELECT * FROM user WHERE username = #{username}")
     User getUserByUsername(String username);
 
     int insertUser(User user);
