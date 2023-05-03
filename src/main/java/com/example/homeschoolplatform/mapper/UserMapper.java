@@ -3,6 +3,7 @@ package com.example.homeschoolplatform.mapper;
 import com.example.homeschoolplatform.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
 * @author user
@@ -29,4 +30,6 @@ public interface UserMapper {
     User getUserByUsername(String username);
 
     int insertUser(User user);
+    @Update("UPDATE user SET online_status = #{status} WHERE id = #{userId}")
+    void updateOnlineStatus(Long userId, Integer status);
 }

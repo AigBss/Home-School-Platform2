@@ -71,7 +71,9 @@ export default {
         if (response.data.success) {
           console.log("登录成功");
           // 根据实际情况跳转到其他页面，例如：
-          // router.push("/dashboard");
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          // 跳转到其他页面，例如：
+          await router.push("/user-profile");
         } else {
           console.log("登录失败");
         }

@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -37,16 +39,17 @@ export default {
     async submitForm() {
       try {
         // 调用后端 API 进行注册
-        const response = await this.$http.post('/api/register', this.registerForm);
+        const response = await axios.post('http://localhost:8080/api/register', this.registerForm);
 
         if (response.status === 201) {
           this.$message.success('注册成功');
-          this.$router.push('/login');
+          this.$router.push('/');
         } else {
           this.$message.error('注册失败');
         }
       } catch (error) {
-        this.$message.error('注册失败');
+        console.log(error)
+        this.$message.error('注册失效');
       }
     },
   },

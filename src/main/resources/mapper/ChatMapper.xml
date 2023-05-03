@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.homeschoolplatform.mapper.ChatMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.homeschoolplatform.entity.Chat">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="senderId" column="sender_id" jdbcType="INTEGER"/>
+            <result property="receiverId" column="receiver_id" jdbcType="INTEGER"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,sender_id,receiver_id,
+        created_at,updated_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from chat
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from chat
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.Chat" useGeneratedKeys="true">
+        insert into chat
+        ( id,sender_id,receiver_id
+        ,created_at,updated_at)
+        values (#{id,jdbcType=INTEGER},#{senderId,jdbcType=INTEGER},#{receiverId,jdbcType=INTEGER}
+        ,#{createdAt,jdbcType=TIMESTAMP},#{updatedAt,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.Chat" useGeneratedKeys="true">
+        insert into chat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="senderId != null">sender_id,</if>
+                <if test="receiverId != null">receiver_id,</if>
+                <if test="createdAt != null">created_at,</if>
+                <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="senderId != null">#{senderId,jdbcType=INTEGER},</if>
+                <if test="receiverId != null">#{receiverId,jdbcType=INTEGER},</if>
+                <if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
+                <if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.homeschoolplatform.entity.Chat">
+        update chat
+        <set>
+                <if test="senderId != null">
+                    sender_id = #{senderId,jdbcType=INTEGER},
+                </if>
+                <if test="receiverId != null">
+                    receiver_id = #{receiverId,jdbcType=INTEGER},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updatedAt != null">
+                    updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.homeschoolplatform.entity.Chat">
+        update chat
+        set 
+            sender_id =  #{senderId,jdbcType=INTEGER},
+            receiver_id =  #{receiverId,jdbcType=INTEGER},
+            created_at =  #{createdAt,jdbcType=TIMESTAMP},
+            updated_at =  #{updatedAt,jdbcType=TIMESTAMP}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>

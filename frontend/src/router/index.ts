@@ -3,15 +3,16 @@ import UserLogin from '@/views/UserLogin.vue';
 import UserRegister from '@/views/UserRegister.vue';
 import Test from '@/views/TestMe.vue';
 
+
 const routes: Array<RouteRecordRaw> = [
 
   {
-    path: '/userlogin',
+    path: '/user login',
     name: 'UserLogin',
     component: UserLogin,
   },
   {
-    path: '/userregister',
+    path: '/user register',
     name: 'UserRegister',
     component: UserRegister,
   },
@@ -20,6 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'test',
     component: Test,
   },
+
 
 ]
 
