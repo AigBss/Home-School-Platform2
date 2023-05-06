@@ -2,17 +2,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import UserLogin from '@/views/UserLogin.vue';
 import UserRegister from '@/views/UserRegister.vue';
 import Test from '@/views/TestMe.vue';
+import TeacherDashboard from '@/views/TeacherDashboard.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
 
   {
-    path: '/user login',
+    path: '/userlogin',
     name: 'UserLogin',
     component: UserLogin,
   },
   {
-    path: '/user register',
+    path: '/userregister',
     name: 'UserRegister',
     component: UserRegister,
   },
@@ -20,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/test',
     name: 'test',
     component: Test,
+  },
+  {
+    path: '/teacherdashboard',
+    name: 'TeacherDashboard',
+    component: TeacherDashboard,
   },
 
 

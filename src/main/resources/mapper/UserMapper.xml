@@ -8,13 +8,11 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
             <result property="userType" column="user_type" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,username,password,
-        email,user_type
+        id,username,password,user_type
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,9 +29,9 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.User" useGeneratedKeys="true">
         insert into user
         ( id,username,password
-        ,email,user_type)
+        ,user_type)
         values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}
-        ,#{email,jdbcType=VARCHAR},#{userType,jdbcType=INTEGER})
+        ,#{userType,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.User" useGeneratedKeys="true">
         insert into user
@@ -41,14 +39,12 @@
                 <if test="id != null">id,</if>
                 <if test="username != null">username,</if>
                 <if test="password != null">password,</if>
-                <if test="email != null">email,</if>
                 <if test="userType != null">user_type,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
                 <if test="username != null">#{username,jdbcType=VARCHAR},</if>
                 <if test="password != null">#{password,jdbcType=VARCHAR},</if>
-                <if test="email != null">#{email,jdbcType=VARCHAR},</if>
                 <if test="userType != null">#{userType,jdbcType=INTEGER},</if>
         </trim>
     </insert>
@@ -65,9 +61,6 @@
                 <if test="password != null">
                     password = #{password,jdbcType=VARCHAR},
                 </if>
-                <if test="email != null">
-                    email = #{email,jdbcType=VARCHAR},
-                </if>
                 <if test="userType != null">
                     user_type = #{userType,jdbcType=INTEGER},
                 </if>
@@ -79,7 +72,6 @@
         set 
             username =  #{username,jdbcType=VARCHAR},
             password =  #{password,jdbcType=VARCHAR},
-            email =  #{email,jdbcType=VARCHAR},
             user_type =  #{userType,jdbcType=INTEGER}
         where   id = #{id,jdbcType=INTEGER} 
     </update>

@@ -1,9 +1,8 @@
 package com.example.homeschoolplatform.mapper;
 
 import com.example.homeschoolplatform.entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
 
 /**
 * @author user
@@ -27,9 +26,18 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     @Select("SELECT * FROM user WHERE username = #{username}")
+    @Results({
+            @Result(column="user_type", property="userType", jdbcType= JdbcType.INTEGER),
+    })
     User getUserByUsername(String username);
 
     int insertUser(User user);
     @Update("UPDATE user SET online_status = #{status} WHERE id = #{userId}")
     void updateOnlineStatus(Long userId, Integer status);
+    @Update("UPDATE user SET username = #{username} WHERE id = #{id}")
+    int updateUsername(@Param("id") Long id, @Param("username") String username);
+
+    @Update("UPDATE user SET password = #{password} WHERE id = #{id}")
+    int updatePassword(@Param("id") Long id, @Param("password") String password);
+
 }

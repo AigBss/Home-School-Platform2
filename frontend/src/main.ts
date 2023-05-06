@@ -7,6 +7,10 @@ import App from './App.vue';
 import UserRegister from './views/UserRegister.vue';
 import UserLogin from '@/views/UserLogin.vue';
 import TestMe from '@/views/TestMe.vue';
+import TeacherDashboard from '@/views/TeacherDashboard.vue';
+// import axios from "axios";
+//
+// axios.defaults.withCredentials=true;
 
 const routes = [
 
@@ -21,6 +25,10 @@ const routes = [
     {
         path: '/test',
         component: TestMe,
+    },
+    {
+        path: '/teacherdashboard',
+        component: TeacherDashboard,
     },
 
 ];

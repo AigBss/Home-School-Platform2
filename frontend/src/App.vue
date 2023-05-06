@@ -9,6 +9,23 @@
   </el-container>
 </template>
 
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+function loadCss(url: string): void {
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = url
+  link.crossOrigin = 'anonymous'
+  document.getElementsByTagName('head')[0].appendChild(link)
+}
+
+onMounted(() => {
+  // 加载 FontAwesome 所有图标，Url由官网提供
+  loadCss('https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css')
+})
+</script>
+
 <!--<script>-->
 <!--import AppSidebar from "@/components/AppSidebar";-->
 

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {//类 "UserServiceImpl" 必须声明为抽象，或为实现 "UserService" 中的抽象方法 "getUserById(Long)"
     @Autowired
     private UserMapper userMapper;
 
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         if (existingUser != null) {
             return false;
         }
-        User newUser = new User();
+        User newUser = new User();//'com.example.homeschoolplatform.entity.User' 中的 'User(java.lang.Integer, java.lang.String, java.lang.String)' 无法应用于 '()'
         newUser.setUsername(registerRequest.getUsername());
         newUser.setPassword(MD5Util.encrypt(registerRequest.getPassword()));
         newUser.setUserType(Integer.parseInt(registerRequest.getUserType()));
@@ -43,4 +43,30 @@ public class UserServiceImpl implements UserService {
         int rowsAffected = userMapper.insertUser(user);
         return rowsAffected > 0;
     }
+    @Override
+    public boolean updateUsername(Long userId, String newUsername) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            return false;
+        }
+        user.setUsername(newUsername);
+        int rowsAffected = userMapper.updateByPrimaryKeySelective(user);
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public boolean updatePassword(Long userId, String newPassword) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            return false;
+        }
+        user.setPassword(MD5Util.encrypt(newPassword));
+        int rowsAffected = userMapper.updateByPrimaryKeySelective(user);
+        return rowsAffected > 0;
+    }
+    @Override
+    public User getUserById(Long id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
 }

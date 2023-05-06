@@ -5,10 +5,10 @@ import lombok.Data;
 
 /**
  * 
- * @TableName user
+ * @TableName class
  */
 @Data
-public class User implements Serializable {
+public class Class implements Serializable {
     /**
      * 
      */
@@ -17,29 +17,14 @@ public class User implements Serializable {
     /**
      * 
      */
-    private String username;
+    private String name;
 
     /**
      * 
      */
-    private String password;
-
-
-    /**
-     * 
-     */
-    private Integer userType;
+    private String teacher;
 
     private static final long serialVersionUID = 1L;
-    public User(Integer id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public User() {
-
-    }
 
     @Override
     public boolean equals(Object that) {
@@ -52,11 +37,10 @@ public class User implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        User other = (User) that;
+        Class other = (Class) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
-            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-            && (this.getUserType() == null ? other.getUserType() == null : this.getUserType().equals(other.getUserType()));
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getTeacher() == null ? other.getTeacher() == null : this.getTeacher().equals(other.getTeacher()));
     }
 
     @Override
@@ -64,9 +48,8 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
-        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
-        result = prime * result + ((getUserType() == null) ? 0 : getUserType().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getTeacher() == null) ? 0 : getTeacher().hashCode());
         return result;
     }
 
@@ -77,9 +60,8 @@ public class User implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", username=").append(username);
-        sb.append(", password=").append(password);
-        sb.append(", userType=").append(userType);
+        sb.append(", name=").append(name);
+        sb.append(", teacher=").append(teacher);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

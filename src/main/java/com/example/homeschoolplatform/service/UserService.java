@@ -8,4 +8,7 @@ public interface UserService {
     boolean checkPassword(String inputPassword, String storedPassword);
     boolean register(RegisterRequest registerRequest);
     boolean registerUser(User user);
+    boolean updateUsername(Long userId, String newUsername);
+    boolean updatePassword(Long userId, String newPassword);
+    User getUserById(Long id);
 }
