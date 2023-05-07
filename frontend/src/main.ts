@@ -8,6 +8,7 @@ import UserRegister from './views/UserRegister.vue';
 import UserLogin from '@/views/UserLogin.vue';
 import TestMe from '@/views/TestMe.vue';
 import TeacherDashboard from '@/views/TeacherDashboard.vue';
+import ChildrenDashboard from '@/views/ChildrenDashboard.vue'
 // import axios from "axios";
 //
 // axios.defaults.withCredentials=true;
@@ -29,6 +30,10 @@ const routes = [
     {
         path: '/teacherdashboard',
         component: TeacherDashboard,
+    },
+    {
+        path: '/childrendashboard',
+        component: ChildrenDashboard,
     },
 
 ];

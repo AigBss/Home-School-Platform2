@@ -92,11 +92,11 @@ export default {
 
           userType.value = response.data.user.userType;
 
-          if (userType.value == "1") {
-            await router.push("/page1");
+          if (userType.value == "3") {
+            await router.push("/childrendashboard");
           } else if (userType.value == "2") {
             await router.push("/teacherdashboard");
-          } else if (userType.value == "3") {
+          } else if (userType.value == "1") {
             await router.push("/page3");
           } else {
             // 如果用户类型不存在，您可以选择重定向到其他页面或显示错误消息。

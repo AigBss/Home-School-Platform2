@@ -1,13 +1,12 @@
 package com.example.homeschoolplatform.mapper;
 
 import com.example.homeschoolplatform.entity.Class;
+import org.apache.ibatis.annotations.Mapper;
 
-/**
-* @author user
-* @description 针对表【class】的数据库操作Mapper
-* @createDate 2023-05-06 18:22:08
-* @Entity com.example.homeschoolplatform.entity.Class
-*/
+import java.util.List;
+import java.util.Map;
+@Mapper
+
 public interface ClassMapper {
 
     int deleteByPrimaryKey(Long id);
@@ -22,4 +21,7 @@ public interface ClassMapper {
 
     int updateByPrimaryKey(Class record);
 
+    List<Class> selectAll();
+
+    int deleteClassByIdAndCreatorId(Map<String, Object> params);
 }

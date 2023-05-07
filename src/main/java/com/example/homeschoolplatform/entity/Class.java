@@ -22,7 +22,7 @@ public class Class implements Serializable {
     /**
      * 
      */
-    private String teacher;
+    private Long creatorId;
 
     private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public class Class implements Serializable {
         Class other = (Class) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getTeacher() == null ? other.getTeacher() == null : this.getTeacher().equals(other.getTeacher()));
+            && (this.getCreatorId() == null ? other.getCreatorId() == null : this.getCreatorId().equals(other.getCreatorId()));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Class implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getTeacher() == null) ? 0 : getTeacher().hashCode());
+        result = prime * result + ((getCreatorId() == null) ? 0 : getCreatorId().hashCode());
         return result;
     }
 
@@ -61,7 +61,7 @@ public class Class implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
-        sb.append(", teacher=").append(teacher);
+        sb.append(", creatorId=").append(creatorId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -25,23 +25,21 @@
               </el-menu-item-group>
               <el-menu-item-group title="班级聊天">
                 <el-menu-item index="1-3">我的班级</el-menu-item>
-                <el-menu-item index="1-4" @click="showCreateClassDialog = true">创建班级</el-menu-item>
-                <el-menu-item index="1-5" @click="showJoinClassDialog = true">加入班级</el-menu-item>
+                <el-menu-item index="1-4" @click="showJoinClassDialog = true">加入班级</el-menu-item>
               </el-menu-item-group>
             </el-sub-menu>
             <el-sub-menu index="2">
               <template #title>
                 <el-icon><icon-menu /></el-icon>通知
               </template>
-                <el-menu-item index="3-1">我的通知</el-menu-item>
-                <el-menu-item index="3-2">发布通知</el-menu-item>
+              <el-menu-item index="3-1">我的通知</el-menu-item>
             </el-sub-menu>
 
             <el-sub-menu index="3">
               <template #title>
                 <el-icon><icon-menu /></el-icon>成绩
               </template>
-              <el-menu-item index="4-2" @click="showUploadGradesDialog = true">上传成绩</el-menu-item>
+              <el-menu-item index="4-2" >我的成绩</el-menu-item>
 
             </el-sub-menu>
             <el-sub-menu index="4">
@@ -79,7 +77,7 @@
 
       <el-main>
         <div style="margin-left: 150px; margin-top: 50px">
-          <h1>欢迎，教师用户 {{ username }}</h1>
+          <h1>欢迎，学生用户 {{ username }}</h1>
           <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>
           <el-button type="primary" @click="showEditPasswordDialog = true">修改密码</el-button>
         </div>
@@ -103,14 +101,7 @@
         </template>
       </el-dialog>
 
-      <!-- 创建班级弹窗 -->
-      <el-dialog title="创建班级" v-model="showCreateClassDialog">
-        <el-input v-model="newClass.name" placeholder="请输入班级名称"></el-input>
-        <template #footer>
-          <el-button @click="showCreateClassDialog = false">取消</el-button>
-          <el-button type="primary" @click="createClass">确认</el-button>
-        </template>
-      </el-dialog>
+
 
       <!-- 加入班级弹窗 -->
       <el-dialog title="加入班级" v-model="showJoinClassDialog">
@@ -121,24 +112,7 @@
         </template>
       </el-dialog>
 
-      <!-- Upload Grades Dialog -->
-      <el-dialog title="上传成绩" v-model="showUploadGradesDialog">
-        <el-upload
-            ref="upload"
-            action="http://localhost:8080/grades/upload"
-            :show-file-list="false"
-            :on-success="handleUploadSuccess"
-            :on-error="handleUploadError"
-        >
-          <template #trigger>
-            <el-button size="small" type="primary">选择文件</el-button>
-          </template>
-          <el-button size="small" type="success" @click="submitUpload">上传</el-button>
-        </el-upload>
-        <template #footer>
-          <el-button @click="showUploadGradesDialog = false">取消</el-button>
-        </template>
-      </el-dialog>
+
 
 
 
@@ -219,35 +193,10 @@ const updatePassword = async () => {
 const showEditUsernameDialog = ref(false);
 const showEditPasswordDialog = ref(false);
 
-const newClass = ref({ name: '', creatorId:'' });
-const showCreateClassDialog = ref(false);
+
 const showJoinClassDialog = ref(false);
 const classToJoinId = ref(null);
 
-const createClass = async () => {
-  if (newClass.value.name && typeof newClass.value.name === 'string') {
-    try {
-      let user = localStorage.getItem("user")
-      user = JSON.parse(user)
-      // console.log(user)
-      // console.log(user.id)
-      newClass.value.creatorId = user.id
-      // console.log(newClass.value)
-      const response = await axios.post(`http://localhost:8080/class/create`, newClass.value);
-
-      if (response.status === 201) {
-        newClass.value.name = '';
-        showCreateClassDialog.value = false;
-        ElMessage.success('创建班级成功');
-      } else {
-        // 根据后端返回的错误消息显示错误
-        ElMessage.error(response.data.message);
-      }
-    } catch (error) {
-      ElMessage.error('创建班级失败');
-    }
-  }
-};
 
 const joinClass = async () => {
   console.log('in')
@@ -274,27 +223,6 @@ const joinClass = async () => {
       ElMessage.error('加入班级失败');
     }
   }
-};
-
-
-// 新的 ref
-const showUploadGradesDialog = ref(false);
-
-// 上传成功处理
-const handleUploadSuccess = (response: any, file: File, fileList: FileList) => {
-  ElMessage.success('成绩上传成功');
-  showUploadGradesDialog.value = false;
-};
-
-// 上传失败处理
-const handleUploadError = (error: Error, file: File, fileList: FileList) => {
-  ElMessage.error('成绩上传失败: ' + error.message);
-};
-
-
-// 提交上传
-const uploadGrades = () => {
-  (fileUploadRef.value as any).submit();
 };
 
 
@@ -332,17 +260,9 @@ const uploadGrades = () => {
   background-color: #545c64;
 }
 
-.el-header {
-  text-align: right;
-  font-size: 16px;
-  background-color: #545c64;
-  color: white;
-}
 
-.layout-main {
-  margin-left: 150px;
-  margin-top: 50px;
-}
+
+
 
 
 
