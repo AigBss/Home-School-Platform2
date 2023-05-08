@@ -39,7 +39,9 @@
               <template #title>
                 <el-icon><icon-menu /></el-icon>成绩
               </template>
-              <el-menu-item index="4-2" >我的成绩</el-menu-item>
+              <el-menu-item index="4-2" @click="navigateToMyGrades">我的成绩</el-menu-item>
+              <el-menu-item index="4-3" @click="navigateToGradeAnalysis">成绩分析</el-menu-item>
+
 
             </el-sub-menu>
             <el-sub-menu index="4">
@@ -76,11 +78,7 @@
 
 
       <el-main>
-        <div style="margin-left: 150px; margin-top: 50px">
-          <h1>欢迎，学生用户 {{ username }}</h1>
-          <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>
-          <el-button type="primary" @click="showEditPasswordDialog = true">修改密码</el-button>
-        </div>
+        <router-view></router-view>
       </el-main>
 
       <!-- Edit Username Dialog -->
@@ -135,6 +133,15 @@ const username = ref('');
 const userId = ref(null);
 const newUsername = ref('');
 const newPassword = ref('');
+
+const navigateToMyGrades = () => {
+  router.push('/studentdashboard/studentgrades');
+};
+
+const navigateToGradeAnalysis = () => {
+  router.push('/gradesanalysis');
+};
+
 
 onMounted(() => {
   const userString = localStorage.getItem('user');

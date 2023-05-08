@@ -78,30 +78,26 @@
 
 
       <el-main>
-        <div style="margin-left: 150px; margin-top: 50px">
-          <h1>欢迎，教师用户 {{ username }}</h1>
-          <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>
-          <el-button type="primary" @click="showEditPasswordDialog = true">修改密码</el-button>
-        </div>
+        <router-view></router-view>
       </el-main>
 
-      <!-- Edit Username Dialog -->
-      <el-dialog title="修改用户名" v-model="showEditUsernameDialog">
-        <el-input v-model="newUsername" placeholder="新的用户名"></el-input>
-        <template #footer>
-          <el-button @click="showEditUsernameDialog = false">取消</el-button>
-          <el-button type="primary" @click="updateUsername">确认</el-button>
-        </template>
-      </el-dialog>
+<!--      &lt;!&ndash; Edit Username Dialog &ndash;&gt;-->
+<!--      <el-dialog title="修改用户名" v-model="showEditUsernameDialog">-->
+<!--        <el-input v-model="newUsername" placeholder="新的用户名"></el-input>-->
+<!--        <template #footer>-->
+<!--          <el-button @click="showEditUsernameDialog = false">取消</el-button>-->
+<!--          <el-button type="primary" @click="updateUsername">确认</el-button>-->
+<!--        </template>-->
+<!--      </el-dialog>-->
 
-      <!-- Edit Password Dialog -->
-      <el-dialog title="修改密码" v-model="showEditPasswordDialog">
-        <el-input v-model="newPassword" placeholder="新的密码" show-password></el-input>
-        <template #footer>
-          <el-button @click="showEditPasswordDialog = false">取消</el-button>
-          <el-button type="primary" @click="updatePassword">确认</el-button>
-        </template>
-      </el-dialog>
+<!--      &lt;!&ndash; Edit Password Dialog &ndash;&gt;-->
+<!--      <el-dialog title="修改密码" v-model="showEditPasswordDialog">-->
+<!--        <el-input v-model="newPassword" placeholder="新的密码" show-password></el-input>-->
+<!--        <template #footer>-->
+<!--          <el-button @click="showEditPasswordDialog = false">取消</el-button>-->
+<!--          <el-button type="primary" @click="updatePassword">确认</el-button>-->
+<!--        </template>-->
+<!--      </el-dialog>-->
 
       <!-- 创建班级弹窗 -->
       <el-dialog title="创建班级" v-model="showCreateClassDialog">

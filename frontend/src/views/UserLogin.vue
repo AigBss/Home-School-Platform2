@@ -93,9 +93,9 @@ export default {
           userType.value = response.data.user.userType;
 
           if (userType.value == "3") {
-            await router.push("/childrendashboard");
+            await router.push("/studentdashboard/studentprofile");
           } else if (userType.value == "2") {
-            await router.push("/teacherdashboard");
+            await router.push("/teacherdashboard/teacherprofile");
           } else if (userType.value == "1") {
             await router.push("/page3");
           } else {

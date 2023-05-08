@@ -32,6 +32,33 @@ public class GradesServiceImpl implements GradesService {
     public List<Grades> getGradesByUserId(int userId) {
         return gradesMapper.listByUserId(userId);
     }
+    @Override
+    public List<Grades> getAllGrades() {
+        return gradesMapper.selectAll();
+    }
+
+    @Override
+    public Grades createGrades(Grades grades) {
+        gradesMapper.insertSelective(grades);
+        return grades;
+    }
+
+    @Override
+    public Grades updateGrades(Grades grades) {
+        gradesMapper.updateByPrimaryKeySelective(grades);
+        return grades;
+    }
+
+    @Override
+    public void deleteGrades(Long id) {
+        gradesMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Grades> getGradesBySubject(String subject) {
+        return gradesMapper.selectBySubject(subject);
+    }
+
 
     public boolean isGradeUnique(Grades grade, List<Grades> existingGrades) {
         for (Grades existingGrade : existingGrades) {

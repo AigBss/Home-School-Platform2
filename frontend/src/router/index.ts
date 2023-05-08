@@ -3,7 +3,8 @@ import UserLogin from '@/views/UserLogin.vue';
 import UserRegister from '@/views/UserRegister.vue';
 import Test from '@/views/TestMe.vue';
 import TeacherDashboard from '@/views/TeacherDashboard.vue';
-import ChildrenDashboard from '@/views/ChildrenDashboard.vue'
+import StudentDashboard from '@/views/StudentDashboard.vue';
+import StudentProfile from '@/views/StudentProfile.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -29,9 +30,19 @@ const routes: Array<RouteRecordRaw> = [
     component: TeacherDashboard,
   },
   {
-    path: '/childrendashboard',
-    name: 'ChildrenDashboard',
-    component: ChildrenDashboard,
+    path: '/studentdashboard',
+    name: 'StudentDashboard',
+    component: StudentDashboard,
+
+    children:[
+      {
+        path:'/studentprofile',
+        name:'StudentProfile',
+        component:StudentProfile,
+      }
+    ],
+
+
   },
 
 

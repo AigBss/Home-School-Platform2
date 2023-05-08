@@ -27,5 +27,6 @@ public interface GradesMapper {
     int updateByPrimaryKey(Grades record);
     List<Grades> listByUserId(Integer userId);
     List<Grades> selectAll();
+    List<Grades> selectBySubject(String subject);
 
 }

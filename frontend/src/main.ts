@@ -8,7 +8,11 @@ import UserRegister from './views/UserRegister.vue';
 import UserLogin from '@/views/UserLogin.vue';
 import TestMe from '@/views/TestMe.vue';
 import TeacherDashboard from '@/views/TeacherDashboard.vue';
-import ChildrenDashboard from '@/views/ChildrenDashboard.vue'
+import StudentDashboard from '@/views/StudentDashboard.vue'
+import StudentProfile from '@/views/StudentProfile.vue';
+import TeacherProfile from '@/views/TeacherProfile.vue';
+import StudentGrades from '@/views/StudentGrades.vue';
+import GradesAnalysis from '@/views/GradesAnalysis.vue'
 // import axios from "axios";
 //
 // axios.defaults.withCredentials=true;
@@ -24,16 +28,36 @@ const routes = [
         component: UserRegister,
     },
     {
-        path: '/test',
-        component: TestMe,
+        path: '/gradesanalysis',
+        component: GradesAnalysis,
     },
     {
         path: '/teacherdashboard',
         component: TeacherDashboard,
+        children:[
+            {
+                path:'teacherprofile',
+                component:TeacherProfile,
+            }
+        ],
     },
     {
-        path: '/childrendashboard',
-        component: ChildrenDashboard,
+        path: '/studentdashboard',
+        component: StudentDashboard,
+        children:[
+            {
+                path:'studentprofile',
+                component:StudentProfile,
+            },
+            {
+                path:'studentgrades',
+                component:StudentGrades,
+            },
+            {
+                path: 'test',
+                component: TestMe,
+            },
+        ],
     },
 
 ];

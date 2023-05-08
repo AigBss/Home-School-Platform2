@@ -37,4 +37,36 @@ public class GradesController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping
+    public ResponseEntity<List<Grades>> getAllGrades() {
+        List<Grades> gradesList = gradesService.getAllGrades();
+        return new ResponseEntity<>(gradesList, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Grades> createGrades(@RequestBody Grades grades) {
+        Grades createdGrades = gradesService.createGrades(grades);
+        return new ResponseEntity<>(createdGrades, HttpStatus.CREATED);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Grades> updateGrades(@PathVariable Integer id, @RequestBody Grades grades) {
+        grades.setId(id);
+        Grades updatedGrades = gradesService.updateGrades(grades);
+        return new ResponseEntity<>(updatedGrades, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteGrades(@PathVariable Long id) {
+        gradesService.deleteGrades(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/subject/{subject}")
+    public ResponseEntity<List<Grades>> getGradesBySubject(@PathVariable String subject) {
+        List<Grades> gradesList = gradesService.getGradesBySubject(subject);
+        return new ResponseEntity<>(gradesList, HttpStatus.OK);
+    }
 }
+

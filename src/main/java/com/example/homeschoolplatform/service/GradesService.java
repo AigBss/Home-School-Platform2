@@ -10,5 +10,11 @@ public interface GradesService {
     void saveGradesFromExcel(MultipartFile file) throws Exception;
 
     List<Grades> getGradesByUserId(int userId);
+    List<Grades> getAllGrades();
+    Grades createGrades(Grades grades);
+    Grades updateGrades(Grades grades);
+    void deleteGrades(Long id);
+    List<Grades> getGradesBySubject(String subject);
+
 
 }
