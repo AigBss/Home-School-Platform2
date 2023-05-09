@@ -20,6 +20,7 @@ public class ClassController {
     @Autowired
     private ClassMemberService classMemberService;
 
+
     @PostMapping("/create")
     public ResponseEntity<?> createClass(@RequestBody Class clazz) {
         try {
@@ -59,4 +60,10 @@ public class ClassController {
     public int updateClass(@RequestBody Class cls) {
         return classService.updateClass(cls);
     }
+
+
+
+
 }
+
+

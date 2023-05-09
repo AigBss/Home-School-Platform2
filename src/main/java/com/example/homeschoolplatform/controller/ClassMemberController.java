@@ -1,9 +1,13 @@
 package com.example.homeschoolplatform.controller;
 
+import com.example.homeschoolplatform.entity.Class;
 import com.example.homeschoolplatform.service.ClassMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -22,5 +26,14 @@ public class ClassMemberController {
         }
     }
 
+    @GetMapping("/member/{userId}")
+    public ResponseEntity<List<Class>> findClassesByUserId(@PathVariable("userId") Long userId) {
+        try {
+            List<Class> classes = classMemberService.findClassesByUserId(userId);
+            return new ResponseEntity<>(classes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
+    }
 }

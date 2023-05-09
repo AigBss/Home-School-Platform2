@@ -11,4 +11,5 @@ public interface ClassService {
     List<Class> findAllClasses();
     int updateClass(Class cls);
     int deleteClassByIdAndCreatorId(Long id, Long creatorId);
+
 }

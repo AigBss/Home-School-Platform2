@@ -11,11 +11,11 @@
             <el-input type="password" v-model="loginForm.password" autocomplete="new-password"></el-input>
           </el-form-item>
           <el-form-item>
-<!--            <drag-verify-->
-<!--                ref="dragVerify"-->
-<!--                @success="onDragVerifySuccess"-->
-<!--                @refresh="onDragVerifyRefresh"-->
-<!--            ></drag-verify>-->
+            <!--            <drag-verify-->
+            <!--                ref="dragVerify"-->
+            <!--                @success="onDragVerifySuccess"-->
+            <!--                @refresh="onDragVerifyRefresh"-->
+            <!--            ></drag-verify>-->
             <drag-verify
                 ref="dragVerify"
                 v-model:value="isPassing"
@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { ElForm, ElFormItem, ElInput, ElButton } from "element-plus";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
+import {ElForm, ElFormItem, ElInput, ElButton} from "element-plus";
 // import  {VueDragVerify } from "vue-drag-verify";
 // import dragVerify from "vue-drag-verify";
 import dragVerify from "@/components/DragVerify";
@@ -64,10 +64,10 @@ export default {
     const userType = ref(null);
     const rules = ref({
       username: [
-        { required: true, message: "请输入用户名", trigger: "blur" },
+        {required: true, message: "请输入用户名", trigger: "blur"},
       ],
       password: [
-        { required: true, message: "请输入密码", trigger: "blur" },
+        {required: true, message: "请输入密码", trigger: "blur"},
       ],
     });
 
@@ -149,7 +149,7 @@ export default {
   margin: 100px auto;
 }
 
-.login-button{
+.login-button {
   float: right;
   margin-left: 55%;
 }

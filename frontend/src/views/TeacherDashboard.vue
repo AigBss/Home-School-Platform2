@@ -2,7 +2,8 @@
 
   <el-container class="layout-container-demo" style="height: 900px">
     <div>
-      <div style="background: rgb(84, 92, 100); height: 60px; width:200px; text-align: center; vertical-align: middle; display: table-cell">
+      <div
+          style="background: rgb(84, 92, 100); height: 60px; width:200px; text-align: center; vertical-align: middle; display: table-cell">
         1111
       </div>
       <el-aside width="200px"
@@ -16,7 +17,10 @@
                    text-color="#fff">
             <el-sub-menu index="1">
               <template #title>
-                <el-icon><message /></el-icon>我的聊天
+                <el-icon>
+                  <message/>
+                </el-icon>
+                我的聊天
               </template>
               <el-menu-item-group>
                 <template #title>个人聊天</template>
@@ -31,22 +35,31 @@
             </el-sub-menu>
             <el-sub-menu index="2">
               <template #title>
-                <el-icon><icon-menu /></el-icon>通知
+                <el-icon>
+                  <icon-menu/>
+                </el-icon>
+                通知
               </template>
-                <el-menu-item index="3-1">我的通知</el-menu-item>
-                <el-menu-item index="3-2">发布通知</el-menu-item>
+              <el-menu-item index="3-1" @click="gotomynotifications">我的通知</el-menu-item>
+              <el-menu-item index="3-2" @click="createnotification">发布通知</el-menu-item>
             </el-sub-menu>
 
             <el-sub-menu index="3">
               <template #title>
-                <el-icon><icon-menu /></el-icon>成绩
+                <el-icon>
+                  <icon-menu/>
+                </el-icon>
+                成绩
               </template>
               <el-menu-item index="4-2" @click="showUploadGradesDialog = true">上传成绩</el-menu-item>
 
             </el-sub-menu>
             <el-sub-menu index="4">
               <template #title>
-                <el-icon><icon-menu /></el-icon>文件
+                <el-icon>
+                  <icon-menu/>
+                </el-icon>
+                文件
               </template>
               <el-menu-item index="3-1">上传文件</el-menu-item>
               <el-menu-item index="3-2">文件管理</el-menu-item>
@@ -57,12 +70,15 @@
       </el-aside>
     </div>
     <el-container>
-      <el-header style="text-align: right; font-size: 16px;background-color: #545c64;color: white;class:'layout-header'">
+      <el-header
+          style="text-align: right; font-size: 16px;background-color: #545c64;color: white;class:'layout-header'">
         <div class="toolbar">
           <el-dropdown>
             <el-icon style="margin-right: 8px; margin-top: 1px;background-color: white"
-            ><setting
-            /></el-icon>
+            >
+              <setting
+              />
+            </el-icon>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>View</el-dropdown-item>
@@ -76,28 +92,27 @@
       </el-header>
 
 
-
       <el-main>
         <router-view></router-view>
       </el-main>
 
-<!--      &lt;!&ndash; Edit Username Dialog &ndash;&gt;-->
-<!--      <el-dialog title="修改用户名" v-model="showEditUsernameDialog">-->
-<!--        <el-input v-model="newUsername" placeholder="新的用户名"></el-input>-->
-<!--        <template #footer>-->
-<!--          <el-button @click="showEditUsernameDialog = false">取消</el-button>-->
-<!--          <el-button type="primary" @click="updateUsername">确认</el-button>-->
-<!--        </template>-->
-<!--      </el-dialog>-->
+      <!--      &lt;!&ndash; Edit Username Dialog &ndash;&gt;-->
+      <!--      <el-dialog title="修改用户名" v-model="showEditUsernameDialog">-->
+      <!--        <el-input v-model="newUsername" placeholder="新的用户名"></el-input>-->
+      <!--        <template #footer>-->
+      <!--          <el-button @click="showEditUsernameDialog = false">取消</el-button>-->
+      <!--          <el-button type="primary" @click="updateUsername">确认</el-button>-->
+      <!--        </template>-->
+      <!--      </el-dialog>-->
 
-<!--      &lt;!&ndash; Edit Password Dialog &ndash;&gt;-->
-<!--      <el-dialog title="修改密码" v-model="showEditPasswordDialog">-->
-<!--        <el-input v-model="newPassword" placeholder="新的密码" show-password></el-input>-->
-<!--        <template #footer>-->
-<!--          <el-button @click="showEditPasswordDialog = false">取消</el-button>-->
-<!--          <el-button type="primary" @click="updatePassword">确认</el-button>-->
-<!--        </template>-->
-<!--      </el-dialog>-->
+      <!--      &lt;!&ndash; Edit Password Dialog &ndash;&gt;-->
+      <!--      <el-dialog title="修改密码" v-model="showEditPasswordDialog">-->
+      <!--        <el-input v-model="newPassword" placeholder="新的密码" show-password></el-input>-->
+      <!--        <template #footer>-->
+      <!--          <el-button @click="showEditPasswordDialog = false">取消</el-button>-->
+      <!--          <el-button type="primary" @click="updatePassword">确认</el-button>-->
+      <!--        </template>-->
+      <!--      </el-dialog>-->
 
       <!-- 创建班级弹窗 -->
       <el-dialog title="创建班级" v-model="showCreateClassDialog">
@@ -137,17 +152,16 @@
       </el-dialog>
 
 
-
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {Menu as IconMenu, Message, Setting} from '@element-plus/icons-vue';
 import axios from 'axios';
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
 
 const fileUploadRef = ref(null);
 
@@ -215,7 +229,7 @@ const updatePassword = async () => {
 const showEditUsernameDialog = ref(false);
 const showEditPasswordDialog = ref(false);
 
-const newClass = ref({ name: '', creatorId:'' });
+const newClass = ref({name: '', creatorId: ''});
 const showCreateClassDialog = ref(false);
 const showJoinClassDialog = ref(false);
 const classToJoinId = ref(null);
@@ -294,8 +308,12 @@ const uploadGrades = () => {
 };
 
 
-
-
+const createnotification = () => {
+  router.push('/teacherdashboard/createnotification');
+};
+const gotomynotifications = () => {
+  router.push('/teacherdashboard/mynotifications');
+};
 
 
 </script>
@@ -306,16 +324,20 @@ const uploadGrades = () => {
   background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
 }
+
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
 }
+
 .layout-container-demo .el-menu {
   border-right: none;
 }
+
 .layout-container-demo .el-main {
   padding: 0;
 }
+
 .layout-container-demo .toolbar {
   display: inline-flex;
   align-items: center;
@@ -339,7 +361,6 @@ const uploadGrades = () => {
   margin-left: 150px;
   margin-top: 50px;
 }
-
 
 
 </style>

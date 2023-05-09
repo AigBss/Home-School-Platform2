@@ -13,6 +13,10 @@ import StudentProfile from '@/views/StudentProfile.vue';
 import TeacherProfile from '@/views/TeacherProfile.vue';
 import StudentGrades from '@/views/StudentGrades.vue';
 import GradesAnalysis from '@/views/GradesAnalysis.vue'
+import CreateNotification from '@/views/CreateNotification.vue'
+import MyNotifications from '@/views/MyNotifications.vue'
+import ClassNotifications from '@/views/ClassNotifications.vue'
+import FileManagement from '@/views/FileManagement.vue'
 // import axios from "axios";
 //
 // axios.defaults.withCredentials=true;
@@ -38,6 +42,14 @@ const routes = [
             {
                 path:'teacherprofile',
                 component:TeacherProfile,
+            },
+            {
+                path: 'createnotification',
+                component: CreateNotification,
+            },
+            {
+                path: 'mynotifications',
+                component: MyNotifications,
             }
         ],
     },
@@ -57,7 +69,16 @@ const routes = [
                 path: 'test',
                 component: TestMe,
             },
+            {
+                path: 'classnotifications',
+                component: ClassNotifications,
+            },
+
         ],
+    },
+    {
+        path: '/filemanagement',
+        component: FileManagement,
     },
 
 ];

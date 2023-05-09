@@ -2,7 +2,8 @@
 
   <el-container class="layout-container-demo" style="height: 900px">
     <div>
-      <div style="background: rgb(84, 92, 100); height: 60px; width:200px; text-align: center; vertical-align: middle; display: table-cell">
+      <div
+          style="background: rgb(84, 92, 100); height: 60px; width:200px; text-align: center; vertical-align: middle; display: table-cell">
         1111
       </div>
       <el-aside width="200px"
@@ -16,7 +17,10 @@
                    text-color="#fff">
             <el-sub-menu index="1">
               <template #title>
-                <el-icon><message /></el-icon>我的聊天
+                <el-icon>
+                  <message/>
+                </el-icon>
+                我的聊天
               </template>
               <el-menu-item-group>
                 <template #title>个人聊天</template>
@@ -30,14 +34,20 @@
             </el-sub-menu>
             <el-sub-menu index="2">
               <template #title>
-                <el-icon><icon-menu /></el-icon>通知
+                <el-icon>
+                  <icon-menu/>
+                </el-icon>
+                通知
               </template>
-              <el-menu-item index="3-1">我的通知</el-menu-item>
+              <el-menu-item index="2-1" @click="goToClassNotifications">班级通知</el-menu-item>
             </el-sub-menu>
 
             <el-sub-menu index="3">
               <template #title>
-                <el-icon><icon-menu /></el-icon>成绩
+                <el-icon>
+                  <icon-menu/>
+                </el-icon>
+                成绩
               </template>
               <el-menu-item index="4-2" @click="navigateToMyGrades">我的成绩</el-menu-item>
               <el-menu-item index="4-3" @click="navigateToGradeAnalysis">成绩分析</el-menu-item>
@@ -46,10 +56,13 @@
             </el-sub-menu>
             <el-sub-menu index="4">
               <template #title>
-                <el-icon><icon-menu /></el-icon>文件
+                <el-icon>
+                  <icon-menu/>
+                </el-icon>
+                文件
               </template>
-              <el-menu-item index="3-1">上传文件</el-menu-item>
-              <el-menu-item index="3-2">文件管理</el-menu-item>
+
+              <el-menu-item index="3-1" @click="gotoFileManagement">文件管理</el-menu-item>
             </el-sub-menu>
 
           </el-menu>
@@ -57,12 +70,15 @@
       </el-aside>
     </div>
     <el-container>
-      <el-header style="text-align: right; font-size: 16px;background-color: #545c64;color: white;class:'layout-header'">
+      <el-header
+          style="text-align: right; font-size: 16px;background-color: #545c64;color: white;class:'layout-header'">
         <div class="toolbar">
           <el-dropdown>
             <el-icon style="margin-right: 8px; margin-top: 1px;background-color: white"
-            ><setting
-            /></el-icon>
+            >
+              <setting
+              />
+            </el-icon>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>View</el-dropdown-item>
@@ -74,7 +90,6 @@
           <span>{{ username }}</span>
         </div>
       </el-header>
-
 
 
       <el-main>
@@ -100,7 +115,6 @@
       </el-dialog>
 
 
-
       <!-- 加入班级弹窗 -->
       <el-dialog title="加入班级" v-model="showJoinClassDialog">
         <el-input v-model="classToJoinId" placeholder="请输入班级ID" type="number"></el-input>
@@ -111,19 +125,16 @@
       </el-dialog>
 
 
-
-
-
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {Menu as IconMenu, Message, Setting} from '@element-plus/icons-vue';
 import axios from 'axios';
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
 
 const fileUploadRef = ref(null);
 
@@ -231,10 +242,13 @@ const joinClass = async () => {
     }
   }
 };
+const goToClassNotifications = () => {
+  router.push('/studentdashboard/classnotifications');
+};
+const gotoFileManagement = () => {
+  router.push('/filemanagement')
 
-
-
-
+}
 
 
 </script>
@@ -245,16 +259,20 @@ const joinClass = async () => {
   background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
 }
+
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
 }
+
 .layout-container-demo .el-menu {
   border-right: none;
 }
+
 .layout-container-demo .el-main {
   padding: 0;
 }
+
 .layout-container-demo .toolbar {
   display: inline-flex;
   align-items: center;
@@ -266,11 +284,6 @@ const joinClass = async () => {
 .layout-aside {
   background-color: #545c64;
 }
-
-
-
-
-
 
 
 </style>

@@ -28,13 +28,12 @@
 </template>
 
 
-
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {Menu as IconMenu, Message, Setting} from '@element-plus/icons-vue';
 import axios from 'axios';
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
 
 const fileUploadRef = ref(null);
 
@@ -102,7 +101,7 @@ const updatePassword = async () => {
 const showEditUsernameDialog = ref(false);
 const showEditPasswordDialog = ref(false);
 
-const newClass = ref({ name: '', creatorId:'' });
+const newClass = ref({name: '', creatorId: ''});
 const showCreateClassDialog = ref(false);
 const showJoinClassDialog = ref(false);
 const classToJoinId = ref(null);
@@ -181,12 +180,7 @@ const uploadGrades = () => {
 };
 
 
-
-
-
-
 </script>
-
 
 
 <style scoped>
@@ -195,16 +189,20 @@ const uploadGrades = () => {
   background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
 }
+
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
 }
+
 .layout-container-demo .el-menu {
   border-right: none;
 }
+
 .layout-container-demo .el-main {
   padding: 0;
 }
+
 .layout-container-demo .toolbar {
   display: inline-flex;
   align-items: center;
@@ -212,8 +210,6 @@ const uploadGrades = () => {
   height: 100%;
   right: 20px;
 }
-
-
 
 
 </style>

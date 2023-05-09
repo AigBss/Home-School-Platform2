@@ -3,7 +3,7 @@
     <el-main>
       <div style="margin-left: 150px; margin-top: 50px">
         <h1>欢迎，学生用户 {{ username }}</h1>
-<!--        <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>-->
+        <!--        <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>-->
         <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>
         <el-button type="primary" @click="showEditPasswordDialog = true">修改密码</el-button>
       </div>
@@ -31,15 +31,12 @@
 </template>
 
 
-
-
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
 
 import axios from 'axios';
-import { ElMessage } from 'element-plus'
-
+import {ElMessage} from 'element-plus'
 
 
 const fileUploadRef = ref(null);
@@ -118,16 +115,20 @@ const updatePassword = async () => {
   background-color: var(--el-color-primary-light-7);
   color: var(--el-text-color-primary);
 }
+
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
 }
+
 .layout-container-demo .el-menu {
   border-right: none;
 }
+
 .layout-container-demo .el-main {
   padding: 0;
 }
+
 .layout-container-demo .toolbar {
   display: inline-flex;
   align-items: center;
@@ -151,7 +152,6 @@ const updatePassword = async () => {
   margin-left: 150px;
   margin-top: 50px;
 }
-
 
 
 </style>

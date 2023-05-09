@@ -14,8 +14,8 @@
     <div class="chart-section">
       <h3>每门科目占当学期总分的饼状图</h3>
       <div ref="gradesChartPie" class="chart-container"></div>
-      </div>
     </div>
+  </div>
 </template>
 
 

@@ -2,6 +2,7 @@ package com.example.homeschoolplatform.service.impl;
 
 import com.example.homeschoolplatform.entity.Class;
 import com.example.homeschoolplatform.mapper.ClassMapper;
+import com.example.homeschoolplatform.mapper.ClassMemberMapper;
 import com.example.homeschoolplatform.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import java.util.Map;
 
 @Service
 public class ClassServiceImpl implements ClassService {
+    @Autowired
+    private ClassMemberMapper classMemberMapper;
     @Autowired
     private ClassMapper classMapper;
 
@@ -47,4 +50,5 @@ public class ClassServiceImpl implements ClassService {
         params.put("creatorId", creatorId);
         return classMapper.deleteClassByIdAndCreatorId(params);
     }
+
 }
