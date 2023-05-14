@@ -6,15 +6,15 @@
 
     <resultMap id="BaseResultMap" type="com.example.homeschoolplatform.entity.Chat">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="senderId" column="sender_id" jdbcType="INTEGER"/>
-            <result property="receiverId" column="receiver_id" jdbcType="INTEGER"/>
-            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
-            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+            <result property="initiatorId" column="initiator_id" jdbcType="INTEGER"/>
+            <result property="recipientId" column="recipient_id" jdbcType="INTEGER"/>
+            <result property="initiatorOnline" column="initiator_online" jdbcType="TINYINT"/>
+            <result property="recipientOnline" column="recipient_online" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,sender_id,receiver_id,
-        created_at,updated_at
+        id,initiator_id,recipient_id,
+        initiator_online,recipient_online
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -30,42 +30,42 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.Chat" useGeneratedKeys="true">
         insert into chat
-        ( id,sender_id,receiver_id
-        ,created_at,updated_at)
-        values (#{id,jdbcType=INTEGER},#{senderId,jdbcType=INTEGER},#{receiverId,jdbcType=INTEGER}
-        ,#{createdAt,jdbcType=TIMESTAMP},#{updatedAt,jdbcType=TIMESTAMP})
+        ( id,initiator_id,recipient_id
+        ,initiator_online,recipient_online)
+        values (#{id,jdbcType=INTEGER},#{initiatorId,jdbcType=INTEGER},#{recipientId,jdbcType=INTEGER}
+        ,#{initiatorOnline,jdbcType=TINYINT},#{recipientOnline,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.Chat" useGeneratedKeys="true">
         insert into chat
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
-                <if test="senderId != null">sender_id,</if>
-                <if test="receiverId != null">receiver_id,</if>
-                <if test="createdAt != null">created_at,</if>
-                <if test="updatedAt != null">updated_at,</if>
+                <if test="initiatorId != null">initiator_id,</if>
+                <if test="recipientId != null">recipient_id,</if>
+                <if test="initiatorOnline != null">initiator_online,</if>
+                <if test="recipientOnline != null">recipient_online,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">#{id,jdbcType=INTEGER},</if>
-                <if test="senderId != null">#{senderId,jdbcType=INTEGER},</if>
-                <if test="receiverId != null">#{receiverId,jdbcType=INTEGER},</if>
-                <if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
-                <if test="updatedAt != null">#{updatedAt,jdbcType=TIMESTAMP},</if>
+                <if test="initiatorId != null">#{initiatorId,jdbcType=INTEGER},</if>
+                <if test="recipientId != null">#{recipientId,jdbcType=INTEGER},</if>
+                <if test="initiatorOnline != null">#{initiatorOnline,jdbcType=TINYINT},</if>
+                <if test="recipientOnline != null">#{recipientOnline,jdbcType=TINYINT},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.example.homeschoolplatform.entity.Chat">
         update chat
         <set>
-                <if test="senderId != null">
-                    sender_id = #{senderId,jdbcType=INTEGER},
+                <if test="initiatorId != null">
+                    initiator_id = #{initiatorId,jdbcType=INTEGER},
                 </if>
-                <if test="receiverId != null">
-                    receiver_id = #{receiverId,jdbcType=INTEGER},
+                <if test="recipientId != null">
+                    recipient_id = #{recipientId,jdbcType=INTEGER},
                 </if>
-                <if test="createdAt != null">
-                    created_at = #{createdAt,jdbcType=TIMESTAMP},
+                <if test="initiatorOnline != null">
+                    initiator_online = #{initiatorOnline,jdbcType=TINYINT},
                 </if>
-                <if test="updatedAt != null">
-                    updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+                <if test="recipientOnline != null">
+                    recipient_online = #{recipientOnline,jdbcType=TINYINT},
                 </if>
         </set>
         where   id = #{id,jdbcType=INTEGER} 
@@ -73,10 +73,18 @@
     <update id="updateByPrimaryKey" parameterType="com.example.homeschoolplatform.entity.Chat">
         update chat
         set 
-            sender_id =  #{senderId,jdbcType=INTEGER},
-            receiver_id =  #{receiverId,jdbcType=INTEGER},
-            created_at =  #{createdAt,jdbcType=TIMESTAMP},
-            updated_at =  #{updatedAt,jdbcType=TIMESTAMP}
+            initiator_id =  #{initiatorId,jdbcType=INTEGER},
+            recipient_id =  #{recipientId,jdbcType=INTEGER},
+            initiator_online =  #{initiatorOnline,jdbcType=TINYINT},
+            recipient_online =  #{recipientOnline,jdbcType=TINYINT}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
+
+    <select id="selectChatsByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from chat
+        where initiator_id = #{userId,jdbcType=INTEGER} or recipient_id = #{userId,jdbcType=INTEGER}
+    </select>
+
 </mapper>

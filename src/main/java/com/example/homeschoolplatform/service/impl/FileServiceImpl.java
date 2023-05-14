@@ -19,7 +19,7 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private FileMapper fileMapper;
 
-    private final String storageDirectory = "/path/to/your/storage/directory/";
+    private final String storageDirectory = "./";
 
     @Override
     public File uploadFile(MultipartFile file, Long userId) throws IOException {
@@ -55,9 +55,13 @@ public class FileServiceImpl implements FileService {
         }
         return false;
     }
+    @Override
+    public List<File> getUserFiles(Long userId) {
+        return fileMapper.selectByUserId(userId);
+    }
+    @Override
+    public List<File> getAllFiles() {
+        return fileMapper.selectAllFiles();
+    }
 
-//    @Override
-//    public List<File> getUserFiles(Long userId) {
-//        return fileMapper.getUserFiles(userId);
-//    }
 }

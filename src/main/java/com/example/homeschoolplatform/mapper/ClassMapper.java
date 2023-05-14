@@ -25,5 +25,8 @@ public interface ClassMapper {
 
     int deleteClassByIdAndCreatorId(Map<String, Object> params);
 
+    List<Class> selectClassesCreatedByUserId(Long userId);
+
+
 
 }

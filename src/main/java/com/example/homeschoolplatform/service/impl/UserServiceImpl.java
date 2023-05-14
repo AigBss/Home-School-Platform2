@@ -8,6 +8,8 @@ import com.example.homeschoolplatform.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {//类 "UserServiceImpl" 必须声明为抽象，或为实现 "UserService" 中的抽象方法 "getUserById(Long)"
     @Autowired
@@ -67,6 +69,16 @@ public class UserServiceImpl implements UserService {//类 "UserServiceImpl" 必
     @Override
     public User getUserById(Long id) {
         return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userMapper.getAllUsers();
+    };
+
+    @Override
+    public boolean updateUserType(long id, int userType) {
+        return userMapper.updateUserType(id, userType) > 0;
     }
 
 }

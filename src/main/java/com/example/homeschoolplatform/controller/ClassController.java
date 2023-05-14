@@ -61,6 +61,28 @@ public class ClassController {
         return classService.updateClass(cls);
     }
 
+    @GetMapping("/created/{userId}")
+    public ResponseEntity<List<Class>> findClassesCreatedByUserId(@PathVariable("userId") Long userId) {
+        try {
+            List<Class> classes = classService.findClassesCreatedByUserId(userId);
+            return new ResponseEntity<>(classes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{id}/name")
+    public ResponseEntity<?> updateClassName(@PathVariable("id") int id, @RequestParam("newName") String newName) {
+        try {
+            if (classService.updateClassName(id, newName)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Failed to update the class name", HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

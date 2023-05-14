@@ -1,69 +1,79 @@
 <template>
   <div class="file-management">
     <div class="file-management-toolbar">
+      <input type="file" ref="fileInput" @change="handleFileUpload" style="display:none" />
       <el-button type="primary" @click="uploadFile">上传文件</el-button>
-      <el-button type="info" @click="goBack">返回</el-button>
     </div>
     <el-table :data="fileList" stripe border>
       <el-table-column prop="filename" label="文件名" width="300"></el-table-column>
-      <el-table-column prop="uploader" label="上传者" width="200"></el-table-column>
-      <el-table-column prop="uploadTime" label="上传时间" width="200"></el-table-column>
+      <el-table-column prop="userid" label="上传者" width="200"></el-table-column>
       <el-table-column label="操作" width="150">
         <template #default="scope">
           <el-button type="text" @click="downloadFile(scope.row)">下载</el-button>
           <el-button
               type="text"
-              v-if="scope.row.canDelete"
               @click="deleteFile(scope.row)"
           >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="totalFiles"
-        :page-size="pageSize"
-        @current-change="handlePageChange"
-    ></el-pagination>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
-import {useRouter} from 'vue-router';
-
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
-import {ElMessage} from 'element-plus'
 
+const fileList = ref([]);
+const fileInput = ref(null);
 
-const router = useRouter();
-const fileList = ref([]); // 示例数据，你需要替换为从后端获取的文件列表
-const totalFiles = ref(100); // 示例数据，你需要替换为从后端获取的文件总数
-const pageSize = ref(10); // 设置每页显示的文件数量
-const currentPage = ref(1); // 当前页
-
-const uploadFile = () => {
-  // 上传文件操作
+const getAllFiles = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/files/all');
+    fileList.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const goBack = () => {
-  router.back();
+onMounted(() => {
+  getAllFiles();
+});
+
+const uploadFile = () => {
+  fileInput.value.click();
+};
+
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('userId', '1'); // Replace with the actual user ID
+
+  try {
+    await axios.post('http://localhost:8080/api/files/upload', formData);
+    getAllFiles();
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const downloadFile = (file) => {
-  // 下载文件操作
+  window.open(`http://localhost:8080/api/files/${file.id}`, '_blank');
 };
 
-const deleteFile = (file) => {
-  // 删除文件操作
-};
-
-const handlePageChange = (page) => {
-  currentPage.value = page;
-  // 获取对应页的文件列表
+const deleteFile = async (file) => {
+  try {
+    await axios.delete(`http://localhost:8080/api/files/${file.id}`, { params: { userId: '1' } }); // Replace with the actual user ID
+    getAllFiles();
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
+
 
 <style scoped>
 .file-management {

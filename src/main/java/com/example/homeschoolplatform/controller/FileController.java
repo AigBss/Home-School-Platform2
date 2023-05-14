@@ -28,6 +28,7 @@ public class FileController {
             File uploadedFile = fileService.uploadFile(file, userId);
             return new ResponseEntity<>(uploadedFile, HttpStatus.CREATED);
         } catch (IOException e) {
+            System.out.println("error");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -49,17 +50,26 @@ public class FileController {
 
     @DeleteMapping("/{fileId}")
     public ResponseEntity<?> deleteFile(@PathVariable("fileId") Long fileId, @RequestParam("userId") Long userId) {
-        boolean result = fileService.deleteFile(fileId, userId);
-        if (result) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<File> userFiles = fileService.getUserFiles(userId);
+        boolean fileOwnedByUser = userFiles.stream().anyMatch(file -> file.getId().equals(fileId));
+
+        if (fileOwnedByUser) {
+            boolean result = fileService.deleteFile(fileId, userId);
+            if (result) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>("Failed to delete the file", HttpStatus.NOT_FOUND);
+            }
         } else {
-            return new ResponseEntity<>("Failed to delete the file", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("You don't have permission to delete this file", HttpStatus.FORBIDDEN);
         }
     }
 
-//    @GetMapping("/user/{userId}")
-//    public ResponseEntity<List<File>> getUserFiles(@PathVariable("userId") Long userId) {
-//        List<File> files = fileService.getUserFiles(userId);
-//        return ResponseEntity.ok(files);
-//    }
+    @GetMapping("/all")
+    public ResponseEntity<List<File>> getAllFiles() {
+        List<File> allFiles = fileService.getAllFiles();
+        return new ResponseEntity<>(allFiles, HttpStatus.OK);
+    }
+
+
 }

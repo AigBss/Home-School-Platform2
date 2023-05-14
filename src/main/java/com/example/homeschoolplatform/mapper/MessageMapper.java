@@ -1,9 +1,8 @@
 package com.example.homeschoolplatform.mapper;
 
 import com.example.homeschoolplatform.entity.Message;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.example.homeschoolplatform.entity.MessageVo;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,7 +28,25 @@ public interface MessageMapper {
 
     int updateByPrimaryKey(Message record);
     @Select("SELECT * FROM message WHERE chat_id = #{chatId}")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "chatId", column = "chat_id"),
+            @Result(property = "senderId", column = "sender_id"),
+            @Result(property = "content", column = "content"),
+            @Result(property = "createdAt", column = "created_at"),
+    })
     List<Message> selectMessagesByChatId(Long chatId);
+
+    @Select("SELECT * FROM message join user on message.sender_id = user.id WHERE chat_id = #{chatId}")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "chatId", column = "chat_id"),
+            @Result(property = "senderId", column = "sender_id"),
+            @Result(property = "content", column = "content"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "username", column = "username"),
+    })
+    List<MessageVo> selectMessagesFullByChatId(Long chatId);
 
     @Delete("DELETE FROM message WHERE chat_id = #{chatId}")
     void deleteMessagesByChatId(Long chatId);

@@ -19,7 +19,7 @@ public class ChatController {
     private ChatService chatService;
 
     @PostMapping("/start")
-    public ResponseEntity<Chat> startChat(@RequestParam("initiatorId") Long initiatorId, @RequestParam("recipientId") Long recipientId) {
+    public ResponseEntity<Chat> startChat(@RequestParam("initiatorId") int initiatorId, @RequestParam("recipientId") int recipientId) {
         Chat chat = chatService.startChat(initiatorId, recipientId);
         if (chat != null) {
             return new ResponseEntity<>(chat, HttpStatus.OK);
@@ -54,5 +54,11 @@ public class ChatController {
     public ResponseEntity<Void> endChat(@PathVariable("chatId") Long chatId) {
         chatService.endChat(chatId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Chat>> getChatsByUserId(@PathVariable("userId") int userId) {
+        List<Chat> chats = chatService.getChatsByUserId(userId);
+        return new ResponseEntity<>(chats, HttpStatus.OK);
     }
 }

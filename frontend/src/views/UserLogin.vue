@@ -97,7 +97,7 @@ export default {
           } else if (userType.value == "2") {
             await router.push("/teacherdashboard/teacherprofile");
           } else if (userType.value == "1") {
-            await router.push("/page3");
+            await router.push("/usermanagement");
           } else {
             // 如果用户类型不存在，您可以选择重定向到其他页面或显示错误消息。
             console.error("Invalid userType.");

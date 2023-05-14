@@ -24,10 +24,12 @@ public class ChatServiceImpl implements ChatService {
     private UserMapper userMapper;
 
     @Override
-    public Chat startChat(Long initiatorId, Long recipientId) {
+    public Chat startChat(int initiatorId, int recipientId) {
         Chat chat = new Chat();
         chat.setInitiatorId(initiatorId);
         chat.setRecipientId(recipientId);
+        chat.setInitiatorOnline(0);
+        chat.setRecipientOnline(0);
         chatMapper.insert(chat);
         return chat;
     }
@@ -50,7 +52,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void endChat(Long chatId) {
-        chatMapper.deleteById(chatId);
+        chatMapper.deleteByPrimaryKey(chatId);
         messageMapper.deleteMessagesByChatId(chatId);
-    }//无法解析 'ChatMapper' 中的方法 'deleteById'无法解析 'MessageMapper' 中的方法 'deleteMessagesByChatId'
+    }
+
+    @Override
+    public List<Chat> getChatsByUserId(int userId) {
+        return chatMapper.selectChatsByUserId(userId);//需要的类型:Long提供的类型:Integer
+    }
 }

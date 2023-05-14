@@ -1,7 +1,6 @@
 package com.example.homeschoolplatform.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -11,33 +10,31 @@ import lombok.Data;
 @Data
 public class Chat implements Serializable {
     /**
-     *
+     * 
      */
     private Integer id;
 
     /**
-     *
+     * 
      */
-    private Integer senderId;
+    private Integer initiatorId;
 
     /**
-     *
+     * 
      */
-    private Integer receiverId;
+    private Integer recipientId;
 
     /**
-     *
+     * 
      */
-    private Date createdAt;
+    private Integer initiatorOnline;
 
     /**
-     *
+     * 
      */
-    private Date updatedAt;
+    private Integer recipientOnline;
 
     private static final long serialVersionUID = 1L;
-    private Long initiatorId;
-    private Long recipientId;
 
     @Override
     public boolean equals(Object that) {
@@ -52,10 +49,10 @@ public class Chat implements Serializable {
         }
         Chat other = (Chat) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getSenderId() == null ? other.getSenderId() == null : this.getSenderId().equals(other.getSenderId()))
-                && (this.getReceiverId() == null ? other.getReceiverId() == null : this.getReceiverId().equals(other.getReceiverId()))
-                && (this.getCreatedAt() == null ? other.getCreatedAt() == null : this.getCreatedAt().equals(other.getCreatedAt()))
-                && (this.getUpdatedAt() == null ? other.getUpdatedAt() == null : this.getUpdatedAt().equals(other.getUpdatedAt()));
+            && (this.getInitiatorId() == null ? other.getInitiatorId() == null : this.getInitiatorId().equals(other.getInitiatorId()))
+            && (this.getRecipientId() == null ? other.getRecipientId() == null : this.getRecipientId().equals(other.getRecipientId()))
+            && (this.getInitiatorOnline() == null ? other.getInitiatorOnline() == null : this.getInitiatorOnline().equals(other.getInitiatorOnline()))
+            && (this.getRecipientOnline() == null ? other.getRecipientOnline() == null : this.getRecipientOnline().equals(other.getRecipientOnline()));
     }
 
     @Override
@@ -63,10 +60,10 @@ public class Chat implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getSenderId() == null) ? 0 : getSenderId().hashCode());
-        result = prime * result + ((getReceiverId() == null) ? 0 : getReceiverId().hashCode());
-        result = prime * result + ((getCreatedAt() == null) ? 0 : getCreatedAt().hashCode());
-        result = prime * result + ((getUpdatedAt() == null) ? 0 : getUpdatedAt().hashCode());
+        result = prime * result + ((getInitiatorId() == null) ? 0 : getInitiatorId().hashCode());
+        result = prime * result + ((getRecipientId() == null) ? 0 : getRecipientId().hashCode());
+        result = prime * result + ((getInitiatorOnline() == null) ? 0 : getInitiatorOnline().hashCode());
+        result = prime * result + ((getRecipientOnline() == null) ? 0 : getRecipientOnline().hashCode());
         return result;
     }
 
@@ -77,20 +74,12 @@ public class Chat implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", senderId=").append(senderId);
-        sb.append(", receiverId=").append(receiverId);
-        sb.append(", createdAt=").append(createdAt);
-        sb.append(", updatedAt=").append(updatedAt);
+        sb.append(", initiatorId=").append(initiatorId);
+        sb.append(", recipientId=").append(recipientId);
+        sb.append(", initiatorOnline=").append(initiatorOnline);
+        sb.append(", recipientOnline=").append(recipientOnline);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
-    public void setInitiatorId(Long initiatorId) {
-        this.initiatorId = initiatorId;
-    }
-
-    public void setRecipientId(Long recipientId) {
-        this.recipientId = recipientId;
-    }
-
 }

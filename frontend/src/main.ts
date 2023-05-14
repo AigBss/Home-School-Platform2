@@ -12,11 +12,16 @@ import StudentDashboard from '@/views/StudentDashboard.vue'
 import StudentProfile from '@/views/StudentProfile.vue';
 import TeacherProfile from '@/views/TeacherProfile.vue';
 import StudentGrades from '@/views/StudentGrades.vue';
-import GradesAnalysis from '@/views/GradesAnalysis.vue'
-import CreateNotification from '@/views/CreateNotification.vue'
-import MyNotifications from '@/views/MyNotifications.vue'
-import ClassNotifications from '@/views/ClassNotifications.vue'
-import FileManagement from '@/views/FileManagement.vue'
+import GradesAnalysis from '@/views/GradesAnalysis.vue';
+import CreateNotification from '@/views/CreateNotification.vue';
+import MyNotifications from '@/views/MyNotifications.vue';
+import ClassNotifications from '@/views/ClassNotifications.vue';
+import FileManagement from '@/views/FileManagement.vue';
+import MyMessage from '@/views/MyMessage.vue';
+import MyChat from '@/views/MyChat.vue';
+import MyClass from '@/views/MyClass.vue';
+import UserManagement from '@/views/UserManagement.vue'
+import GroupMessage from '@/views/GroupMessage.vue'
 // import axios from "axios";
 //
 // axios.defaults.withCredentials=true;
@@ -80,6 +85,32 @@ const routes = [
         path: '/filemanagement',
         component: FileManagement,
     },
+    // {
+    //     path: '/mymessage',
+    //     component: MyMessage,
+    // },
+    {
+        path: '/mychat',
+        component: MyChat,
+        children: [
+            {
+                path: 'mymessage/:chatId',
+                component: MyMessage,
+            }
+        ]
+    },
+    {
+       path: '/myclass',
+       component: MyClass,
+    },
+    {
+        path: '/usermanagement',
+        component: UserManagement
+    },
+    {
+        path: '/chat/:groupChatId',
+        component: GroupMessage
+    }
 
 ];
 

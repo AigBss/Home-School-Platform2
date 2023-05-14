@@ -12,6 +12,9 @@ public interface FileService {
     java.io.File downloadFile(Long fileId);
     boolean deleteFile(Long fileId, Long userId);
 
-//    @Select("SELECT * FROM file WHERE userId = #{userId}")
-//    List<File> getUserFiles(Long userId);
+   @Select("SELECT * FROM file WHERE userId = #{userId}")
+   List<File> getUserFiles(Long userId);
+
+    List<File> getAllFiles();
+
 }

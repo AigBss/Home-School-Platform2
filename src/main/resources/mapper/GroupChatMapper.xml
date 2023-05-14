@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.homeschoolplatform.mapper.GroupChatMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.homeschoolplatform.entity.GroupChat">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="classId" column="class_id" jdbcType="INTEGER"/>
+            <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,class_id,group_name
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from group_chat
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from group_chat
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.GroupChat" useGeneratedKeys="true">
+        insert into group_chat
+        ( id,class_id,group_name
+        )
+        values (#{id,jdbcType=INTEGER},#{classId,jdbcType=INTEGER},#{groupName,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.GroupChat" useGeneratedKeys="true">
+        insert into group_chat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="classId != null">class_id,</if>
+                <if test="groupName != null">group_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="classId != null">#{classId,jdbcType=INTEGER},</if>
+                <if test="groupName != null">#{groupName,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.homeschoolplatform.entity.GroupChat">
+        update group_chat
+        <set>
+                <if test="classId != null">
+                    class_id = #{classId,jdbcType=INTEGER},
+                </if>
+                <if test="groupName != null">
+                    group_name = #{groupName,jdbcType=VARCHAR},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.homeschoolplatform.entity.GroupChat">
+        update group_chat
+        set 
+            class_id =  #{classId,jdbcType=INTEGER},
+            group_name =  #{groupName,jdbcType=VARCHAR}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+
+    <select id="selectIdByClassId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select id
+        from group_chat
+        where class_id = #{classId,jdbcType=INTEGER}
+    </select>
+</mapper>

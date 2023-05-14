@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
@@ -40,6 +42,20 @@ public class UserController {
         boolean updated = userService.updatePassword(id, newPassword);
         if (updated) {
             return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/users")
+    public ResponseEntity<Object> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+    @PutMapping("/users/{id}/type")
+    public ResponseEntity<Object> updateUserType(@PathVariable long id, @RequestBody String userType) {
+        boolean updated = userService.updateUserType(id, Integer.parseInt(userType));
+        if (updated) {
+            return new ResponseEntity<>("User type updated successfully", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }

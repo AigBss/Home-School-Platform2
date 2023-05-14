@@ -22,6 +22,10 @@
         where  id = #{id,jdbcType=INTEGER} 
     </select>
 
+    <select id="getAllUsers" resultMap="BaseResultMap">
+        SELECT * FROM user
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user
         where  id = #{id,jdbcType=INTEGER} 
@@ -75,4 +79,9 @@
             user_type =  #{userType,jdbcType=INTEGER}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
+
+    <update id="updateUserType">
+        UPDATE user SET user_type = #{userType} WHERE id = #{id}
+    </update>
+
 </mapper>

@@ -12,4 +12,10 @@ public interface ClassService {
     int updateClass(Class cls);
     int deleteClassByIdAndCreatorId(Long id, Long creatorId);
 
+    List<Class> findClassesCreatedByUserId(Long userId);
+    boolean updateClassName(Integer id, String newName);
+    boolean removeClassMember(Long classId, Long memberId);
+
+
+
 }

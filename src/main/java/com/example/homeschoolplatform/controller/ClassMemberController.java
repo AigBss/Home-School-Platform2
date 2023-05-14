@@ -1,6 +1,7 @@
 package com.example.homeschoolplatform.controller;
 
 import com.example.homeschoolplatform.entity.Class;
+import com.example.homeschoolplatform.entity.ClassMember;
 import com.example.homeschoolplatform.service.ClassMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,4 +37,27 @@ public class ClassMemberController {
         }
 
     }
+    @GetMapping("/class/{classId}/members")
+    public ResponseEntity<List<ClassMember>> findMembersByClassId(@PathVariable("classId") Long classId) {
+        try {
+            List<ClassMember> members = classMemberService.findMembersByClassId(classId);
+            return new ResponseEntity<>(members, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/class/{classId}/member/{memberId}")
+    public ResponseEntity<?> removeClassMember(@PathVariable("classId") Long classId, @PathVariable("memberId") Long memberId) {
+        try {
+            if (classMemberService.removeClassMember(classId, memberId)) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>("Failed to remove the class member", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

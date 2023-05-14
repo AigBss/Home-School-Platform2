@@ -75,4 +75,12 @@
             creator_id =  #{creatorId,jdbcType=VARCHAR}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
+
+    <select id="selectClassesCreatedByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from class
+        where creator_id = #{userId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

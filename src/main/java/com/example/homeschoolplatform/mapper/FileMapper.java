@@ -3,6 +3,8 @@ package com.example.homeschoolplatform.mapper;
 import com.example.homeschoolplatform.entity.File;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
 * @author user
 * @description 针对表【file】的数据库操作Mapper
@@ -23,5 +25,8 @@ public interface FileMapper {
     int updateByPrimaryKeySelective(File record);
 
     int updateByPrimaryKey(File record);
+    List<File> selectByUserId(Long userId);
+
+    List<File> selectAllFiles();
 
 }

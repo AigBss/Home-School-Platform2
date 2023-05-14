@@ -4,6 +4,8 @@ import com.example.homeschoolplatform.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
+import java.util.List;
+
 /**
 * @author user
 * @description 针对表【user】的数据库操作Mapper
@@ -39,5 +41,8 @@ public interface UserMapper {
 
     @Update("UPDATE user SET password = #{password} WHERE id = #{id}")
     int updatePassword(@Param("id") Long id, @Param("password") String password);
+
+    List<User> getAllUsers();
+    int updateUserType(@Param("id") Long id, @Param("userType") int userType);
 
 }

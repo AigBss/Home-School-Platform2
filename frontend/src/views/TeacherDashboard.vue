@@ -24,11 +24,10 @@
               </template>
               <el-menu-item-group>
                 <template #title>个人聊天</template>
-                <el-menu-item index="1-1">我的聊天</el-menu-item>
-                <el-menu-item index="1-2">创建聊天</el-menu-item>
+                <el-menu-item index="1-1" @click="gotoMyChat">我的聊天</el-menu-item>
               </el-menu-item-group>
               <el-menu-item-group title="班级聊天">
-                <el-menu-item index="1-3">我的班级</el-menu-item>
+                <el-menu-item index="1-3" @click="gotomyclass">我的班级</el-menu-item>
                 <el-menu-item index="1-4" @click="showCreateClassDialog = true">创建班级</el-menu-item>
                 <el-menu-item index="1-5" @click="showJoinClassDialog = true">加入班级</el-menu-item>
               </el-menu-item-group>
@@ -61,8 +60,7 @@
                 </el-icon>
                 文件
               </template>
-              <el-menu-item index="3-1">上传文件</el-menu-item>
-              <el-menu-item index="3-2">文件管理</el-menu-item>
+              <el-menu-item index="3-1" @click="gotoFileManagement">文件管理</el-menu-item>
             </el-sub-menu>
 
           </el-menu>
@@ -314,7 +312,18 @@ const createnotification = () => {
 const gotomynotifications = () => {
   router.push('/teacherdashboard/mynotifications');
 };
+const gotoFileManagement = () => {
+  router.push('/filemanagement')
 
+};
+const gotoMyChat = () => {
+  router.push('/mychat')
+
+};
+const gotomyclass = () => {
+  router.push('/myclass')
+
+}
 
 </script>
 

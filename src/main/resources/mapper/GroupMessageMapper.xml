@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.homeschoolplatform.mapper.GroupMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.homeschoolplatform.entity.GroupMessage">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+            <result property="senderId" column="sender_id" jdbcType="INTEGER"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,group_id,sender_id,
+        content,created_at
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from group_message
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from group_message
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.GroupMessage" useGeneratedKeys="true">
+        insert into group_message
+        ( id,group_id,sender_id
+        ,content,created_at)
+        values (#{id,jdbcType=INTEGER},#{groupId,jdbcType=INTEGER},#{senderId,jdbcType=INTEGER}
+        ,#{content,jdbcType=VARCHAR},#{createdAt,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.homeschoolplatform.entity.GroupMessage" useGeneratedKeys="true">
+        insert into group_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="groupId != null">group_id,</if>
+                <if test="senderId != null">sender_id,</if>
+                <if test="content != null">content,</if>
+                <if test="createdAt != null">created_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=INTEGER},</if>
+                <if test="groupId != null">#{groupId,jdbcType=INTEGER},</if>
+                <if test="senderId != null">#{senderId,jdbcType=INTEGER},</if>
+                <if test="content != null">#{content,jdbcType=VARCHAR},</if>
+                <if test="createdAt != null">#{createdAt,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.homeschoolplatform.entity.GroupMessage">
+        update group_message
+        <set>
+                <if test="groupId != null">
+                    group_id = #{groupId,jdbcType=INTEGER},
+                </if>
+                <if test="senderId != null">
+                    sender_id = #{senderId,jdbcType=INTEGER},
+                </if>
+                <if test="content != null">
+                    content = #{content,jdbcType=VARCHAR},
+                </if>
+                <if test="createdAt != null">
+                    created_at = #{createdAt,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.homeschoolplatform.entity.GroupMessage">
+        update group_message
+        set 
+            group_id =  #{groupId,jdbcType=INTEGER},
+            sender_id =  #{senderId,jdbcType=INTEGER},
+            content =  #{content,jdbcType=VARCHAR},
+            created_at =  #{createdAt,jdbcType=TIMESTAMP}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>
