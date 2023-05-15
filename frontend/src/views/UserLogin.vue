@@ -1,47 +1,50 @@
 <template>
   <el-container>
-    <el-main>
-      <div class="login-container">
-        <h1 class="login-title">登录</h1>
-        <el-form :model="loginForm" :rules="rules" label-width="80px">
-          <el-form-item label="用户名" prop="username">
-            <el-input v-model="loginForm.username" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="loginForm.password" autocomplete="new-password"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <!--            <drag-verify-->
-            <!--                ref="dragVerify"-->
-            <!--                @success="onDragVerifySuccess"-->
-            <!--                @refresh="onDragVerifyRefresh"-->
-            <!--            ></drag-verify>-->
-            <drag-verify
-                ref="dragVerify"
-                v-model:value="isPassing"
-            >
-            </drag-verify>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="success" round class="login-button" @click="submitForm('loginForm')">登录</el-button>
-            <el-button type="primary" round class="register-button" @click="switchToRegister">注册</el-button>
+    <div class="loginbody">
+      <div class="logindata">
+        <div class="logo-wrapper">
+          <img src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg" alt="cartoon-factory" />
+        </div>
+        <div class="form-wrapper">
+          <div class="logintext">
+            <h2>Welcome</h2>
+          </div>
+          <div class="login-container">
+            <el-form :model="loginForm" :rules="rules" label-width="80px">
+              <el-form-item label="用户名" prop="username">
+                <el-input v-model="loginForm.username" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="password">
+                <el-input type="password" v-model="loginForm.password" autocomplete="new-password"></el-input>
+              </el-form-item>
+              <el-form-item class="drag-verify-wrapper">
+                <drag-verify
+                    ref="dragVerify"
+                    v-model:value="isPassing"
+                >
+                </drag-verify>
+              </el-form-item>
+              <el-form-item class="button-wrapper" >
+                <el-link type="primary" round class="register-button" @click="switchToRegister">没有账号？立即注册</el-link>
+                <el-button type="success" round class="login-button" @click="submitForm('loginForm')">登录</el-button>
 
-          </el-form-item>
-        </el-form>
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
       </div>
-    </el-main>
+      <div class="logo-background"></div>
+    </div>
   </el-container>
 </template>
 
 <script>
+
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {ElForm, ElFormItem, ElInput, ElButton} from "element-plus";
-// import  {VueDragVerify } from "vue-drag-verify";
-// import dragVerify from "vue-drag-verify";
 import dragVerify from "@/components/DragVerify";
 import cookies from "js-cookie";
-
 import axios from "axios";
 
 export default {
@@ -146,24 +149,85 @@ export default {
 <style scoped>
 .login-container {
   max-width: 400px;
-  margin: 100px auto;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.button-wrapper >>> .el-form-item__content{
+  margin-left: 20px !important;
+  display: flex;
+  justify-content: space-between;
 }
 
 .login-button {
-  float: right;
-  margin-left: 55%;
+  margin-left: 0px !important;
+
 }
 
 .register-button {
-  float: right;
+  margin-left: 0px !important;
+  margin-right: 70px;
+}
+
+
+
+.loginbody {
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  background-image: linear-gradient(135deg, #8599fd 0%, #13247e 100%);
+  background-position: center center;
+  overflow: auto;
+  background-repeat: no-repeat;
+  position: fixed;
+  line-height: 100%;
+  padding-top: 150px;
+}
+
+.logindata {
+  width: 800px;
+  height: 380px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  transform: translate(-50%);
+  margin-left: 50%;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  display: flex;
+}
+
+.logo-wrapper {
+  width: 50%;
+  height: 68%;
+  margin-top: 50px;
+  margin-left: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.form-wrapper{
+  width: 48%;
+  margin-top: 0px;
   margin-left: 20px;
 }
 
-
-.login-title {
+.logintext {
+  margin-bottom: 20px;
+  line-height: 50px;
   text-align: center;
-  margin-bottom: 80px;
+  font-size: 30px;
+  font-weight: bolder;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
+
+
 </style>
 
 

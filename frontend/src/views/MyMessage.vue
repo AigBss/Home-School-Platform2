@@ -8,9 +8,13 @@
     <div class="send-message">
 
       <el-input v-model="newMessageText" placeholder="输入新的消息" type="textarea"></el-input>
+
+    </div>
+    <div style="float: right; margin-top: 10px">
       <el-button type="primary" @click="sendMessage">发送</el-button>
     </div>
   </div>
+
 </template>
 
 <script lang="ts" setup>
@@ -65,7 +69,7 @@ const sendMessage = async () => {
 }
 
 .messages {
-  height: 80vh;
+  height: 82vh;
   overflow-y: auto;
   margin-bottom: 20px;
 }

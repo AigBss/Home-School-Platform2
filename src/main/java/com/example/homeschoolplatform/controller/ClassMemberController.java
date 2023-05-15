@@ -56,6 +56,7 @@ public class ClassMemberController {
                 return new ResponseEntity<>("Failed to remove the class member", HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

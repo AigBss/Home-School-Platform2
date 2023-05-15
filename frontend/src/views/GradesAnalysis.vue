@@ -1,5 +1,5 @@
 <template>
-  <div class="grades-analysis">
+  <div class="grades-analysis" style="margin-left: 100px">
     <div class="return-btn">
       <router-link to="/studentdashboard/studentprofile">返回</router-link>
     </div>

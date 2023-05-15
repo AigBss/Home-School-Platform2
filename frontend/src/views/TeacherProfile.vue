@@ -2,7 +2,7 @@
   <el-container>
     <el-main>
       <div style="margin-left: 150px; margin-top: 50px">
-        <h1>欢迎，教师用户 {{ username }}</h1>
+        <h1 style="font-size: large">欢迎，教师用户 {{ username }}</h1>
         <el-button type="primary" @click="showEditUsernameDialog = true">修改用户名</el-button>
         <el-button type="primary" @click="showEditPasswordDialog = true">修改密码</el-button>
       </div>

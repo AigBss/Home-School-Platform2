@@ -1,8 +1,16 @@
 <template>
   <div class="chat">
     <div class="chat-sidebar">
-      <p>当前用户：{{ username }}</p>
-      <el-button type="primary" @click="showCreateChatDialog = true">发起聊天</el-button>
+      <div>
+        <p style="display: inline-block; margin-right: 10px;">当前用户：{{ username }}</p>
+        <el-button style="float: right;  margin-top: 12px" type="primary" @click="showCreateChatDialog = true">发起聊天
+        </el-button>
+      </div>
+
+      <div>
+        <p>正在进行的会话：<br><br> {{ nowChatName }}</p>
+      </div>
+
       <el-dialog title="发起聊天" v-model="showCreateChatDialog">
         <el-input v-model="recipientId" placeholder="请输入对方ID"></el-input>
         <template v-slot:footer>
@@ -10,30 +18,28 @@
           <el-button type="primary" @click="startChat">创建</el-button>
         </template>
       </el-dialog>
-      <el-list>
-        <el-list-item v-for="(chat, index) in chats" :key="index">
-          <el-row @click="goToChat(chat.id)">
-            <el-col :span="20">
-              <span>{{ chat.initiatorName }} 与 {{ chat.recipientName }} 的聊天</span>
-            </el-col>
-            <el-col :span="4">
-              <el-button @click="endChat(chat.id)">删除</el-button>
-            </el-col>
-          </el-row>
-        </el-list-item>
-      </el-list>
+
+      <hr style="margin-top: 40px"/>
+      <div style="margin-top: 20px">
+        <el-list>
+          <el-list-item v-for="(chat, index) in chats" :key="index">
+            <el-row @click="goToChat(chat)" style="margin-top: 10px">
+              <el-col :span="18" style="margin-top: 4px">
+                <span>{{ chat.initiatorName }} 与 {{ chat.recipientName }} 的聊天</span>
+              </el-col>
+              <el-col :span="4">
+                <el-button type="danger" @click="endChat(chat.id)">删除</el-button>
+              </el-col>
+            </el-row>
+          </el-list-item>
+        </el-list>
+      </div>
+      <div class="go-home-btn" style="margin-top: 100px">
+        <hr/>
+        <el-button type="primary" @click="goToHome">返回首页</el-button>
+      </div>
     </div>
-<!--    <div class="chat-content">-->
-<!--      <div class="messages">-->
-<!--        <div v-for="(message, index) in messages" :key="index">-->
-<!--          <p><strong>{{ message.senderUsername }}:</strong> {{ message.text }}</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="send-message">-->
-<!--        <el-input v-model="newMessageText" placeholder="输入新的消息"></el-input>-->
-<!--        <el-button type="primary" @click="sendMessage">发送</el-button>-->
-<!--      </div>-->
-<!--    </div>-->
+
     <el-main>
       <router-view></router-view>
     </el-main>
@@ -41,13 +47,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import {ref, onMounted, onBeforeUnmount} from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
-import { useRoute } from 'vue-router';
+import {useRouter} from 'vue-router';
+import {useRoute} from 'vue-router';
 
 const username = ref('');
+const nowChatName = ref('无');
 const userId = ref(null);
+const usertype = ref('')
 
 onMounted(() => {
   const userString = localStorage.getItem('user');
@@ -56,15 +64,14 @@ onMounted(() => {
     if (user && user.username) {
       username.value = user.username;
       userId.value = user.id;
+      usertype.value=user.userType;
     }
   }
-  console.log(userId)
+  console.log(userId);
+  console.log(usertype)
 
   loadChats();
-  // router.push("")
-  // chatId = route.params.chatId;
-  // loadMessages();
-  // timer = setInterval(loadMessages, 5000);
+
 });
 
 const chats = ref([]);
@@ -73,18 +80,10 @@ const recipientId = ref('');
 const router = useRouter();
 
 
-// const loadChats = async () => {
-//   const response = await axios.get('http://localhost:8080/api/chat/userChats', {
-//     params: { userId: userId.value },
-//   });
-//   chats.value = response.data;
-// };
-// loadChats();
-
 const loadChats = async () => {
   const response = await axios.get(`http://localhost:8080/api/chat/user/${userId.value}`);
   chats.value = response.data;
-  for (let i = 0; i < chats.value.length; i++){
+  for (let i = 0; i < chats.value.length; i++) {
     let c = chats.value[i];
     console.log(c.initiatorId, c.recipientId)
     const initiatorName = await axios.get(`http://localhost:8080/api/users/${c.initiatorId}`);
@@ -97,6 +96,18 @@ const loadChats = async () => {
   console.log(chats.value)
 };
 
+const goToHome = () => {
+  if (usertype.value == "3") {
+     router.push("/studentdashboard/studentprofile");
+  } else if (usertype.value == "2") {
+     router.push("/teacherdashboard/teacherprofile");
+  } else if (usertype.value == "1") {
+    router.push("/usermanagement");
+  } else {
+    // 如果用户类型不存在，您可以选择重定向到其他页面或显示错误消息。
+    console.error("Invalid userType.");
+  }
+  }
 
 
 const startChat = async () => {
@@ -108,7 +119,8 @@ const startChat = async () => {
       if (user && user.id) {
         initiatorId = user.id;
       }
-    }await axios.post('http://localhost:8080/api/chat/start',  {}, {
+    }
+    await axios.post('http://localhost:8080/api/chat/start', {}, {
       params: {
         initiatorId,
         recipientId: recipientId.value,
@@ -132,8 +144,9 @@ const endChat = async (chatId) => {
     console.error(error);
   }
 };
-const goToChat = (chatId) => {
-  router.push(`/mychat/mymessage/${chatId}`);
+const goToChat = (chat) => {
+  nowChatName.value = `${chat.initiatorName} 与 ${chat.recipientName} 的聊天`
+  router.push(`/mychat/mymessage/${chat.id}`);
   // console.log(router.getRoutes())
   // router.push(`/mychat/mymessage/1`);
 };
@@ -182,10 +195,10 @@ const sendMessage = async () => {
 
 .chat-sidebar {
   background-color: #f5f7fa;
-  width: 250px;
+  width: 330px;
   padding: 20px;
   border-right: 1px solid #e4e7ed;
-  height: 100%;
+  /*height: 100%;*/
   overflow-y: auto;
 }
 

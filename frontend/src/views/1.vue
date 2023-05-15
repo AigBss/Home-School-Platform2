@@ -1,174 +1,179 @@
 <template>
-  <el-container>
-    <div style="height: 60px; line-height: 50px; border-bottom: 1px solid  rgb(48,65,86); background-color: aliceblue">
-      <div style="display: flex;height: 59px">
-        <div style="width: 180px; background-color: rgb(48,65,86);color: white; font-weight: bold; padding-left: 20px; font-size: 20px">
-
-          <img   src="../../assets/logo.png"  style="width: 20px; position: relative;top:5px;margin-right: 5px" /><b style="color:white">可视化工厂</b>
+  <div class="loginbody">
+    <div class="logindata">
+      <div class="logo-wrapper">
+        <img src="../../assets/cartoon-factory.jpg" alt="cartoon-factory" />
+      </div>
+      <div class="form-wrapper">
+        <div class="logintext">
+          <h2>Welcome</h2>
         </div>
-        <div style="flex: 1; display: flex;background-color: white" @mouseout="leave">
-          <div style="flex: 1">
-
+        <el-form ref="form" :model="form" :rules="rules">
+          <el-form-item prop="name">
+            <el-input v-model="form.name" clearable placeholder="请输入账号"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="form.password" clearable placeholder="请输入密码" show-password></el-input>
+          </el-form-item>
+        </el-form>
+        <div class="tool">
+          <div>
+            <el-checkbox v-model="checked" @change="remenber">记住密码</el-checkbox>
           </div>
-          <el-descriptions title="用户1" :column="3" border v-show="seen" >
-            <el-descriptions-item
-                label="Username"
-                label-align="right"
-                align="center"
-                label-class-name="my-label"
-                class-name="my-content"
-                width="150px"
-            >kooriookami</el-descriptions-item
-            >
-            <el-descriptions-item label="Telephone" label-align="right" align="center"
-            >18100000000</el-descriptions-item
-            >
-            <el-descriptions-item label="Place" label-align="right" align="center"
-            >Suzhou</el-descriptions-item
-            >
-            <el-descriptions-item label="Remarks" label-align="right" align="center">
-              <el-tag size="small">School</el-tag>
-            </el-descriptions-item>
-            <el-descriptions-item label="Address" label-align="right" align="center"
-            >No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu
-              Province</el-descriptions-item
-            >
-          </el-descriptions>
-          <div style="width: 30px; text-align: right; padding-right: 20px">
-            <el-avatar @mouseenter="enter" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+          <div>
+            <span class="shou">忘记密码？</span>
           </div>
+        </div>
+        <div class="butt-wrapper">
+          <el-button type="primary" @click="login">登录</el-button>
+          <el-button>注册</el-button>
         </div>
       </div>
     </div>
-    <el-container >
-      <el-aside width="200px" style="background-color: rgb(48,65,86)">
-        <el-menu style="background-color: rgb(48,65,86)" text-color="#fff">
-          <el-sub-menu index="1">
-            <template #title>
-              <el-icon><Location /></el-icon>
-              <span><font size="4px" color="white">工厂</font></span>
-            </template>
-            <el-menu-item index="1-1">
-              <router-link to="/factoryintroduction">工厂介绍</router-link>
-            </el-menu-item>
-            <el-menu-item index="1-2">
-              <span><router-link to="/bdmap">工厂地图</router-link></span>
-            </el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="2" text-color="#fff">
-            <template #title>
-              <el-icon><tools/></el-icon>
-              <span><font size="4px" color="white" >设备</font></span>
-            </template>
-            <el-menu-item index="2-1" >
-              <span ><router-link to="/equipmentechart" >可视化呈现</router-link></span>
-            </el-menu-item>
-            <el-menu-item index="2-3">
-              <span><router-link to="/equipment">设备管理</router-link></span>
-            </el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu index="3">
-            <template #title>
-              <el-icon><management /></el-icon>
-              <span><font size="4px" color="white">订单</font></span>
-            </template>
-            <el-menu-item index="3-1">
-              <router-link to="/mydept">订单统计</router-link>
-            </el-menu-item>
-            <el-menu-item index="3-2">
-              <span><router-link to="/ordermanage">订单管理</router-link></span>
-            </el-menu-item>
-          </el-sub-menu>
-          <el-sub-menu  index="4">
-            <template #title>
-              <el-icon><DeleteFilled /></el-icon>
-              <span><router-link to="/myshop"><font size="4px" color="white">排污</font></router-link></span>
-            </template>
-            <el-menu-item index="4-1">
-              <router-link to="/mydept">污染预警</router-link>
-            </el-menu-item>
-            <el-menu-item index="4-2">
-              <span><router-link to="/ordermanage">污染管理</router-link></span>
-            </el-menu-item>
-          </el-sub-menu >
-          <el-sub-menu  index="5">
-            <template #title>
-              <el-icon><Box /></el-icon>
-              <span><router-link to="/myshop"><font size="4px" color="white">库存</font></router-link></span>
-            </template>
-            <el-menu-item index="5-1">
-              <router-link to="/ingredient">原料管理</router-link>
-            </el-menu-item>
-            <el-menu-item index="5-2">
-              <span><router-link to="/ordermanage">产品管理</router-link></span>
-            </el-menu-item>
-          </el-sub-menu >
-
-        </el-menu>
-      </el-aside>
-      <el-main class="main">
-        <router-view></router-view>
-      </el-main>
-    </el-container>
-    <el-footer class="el-footer"></el-footer>
-  </el-container>
+    <div class="logo-background"></div>
+  </div>
 </template>
 
+
 <script>
-
+import { inject } from 'vue';
 export default {
-  name: "MyMain",
-
-  data(){
-    return{
-      seen:false,
-    }
+  name: "MyLogin",
+  setup() {
+    const axiosInstance = inject('axiosInstance');
+    return { axiosInstance };
   },
-  methods:{
-    enter(){
-      this.seen = true
-    },
-    leave(){
-      this.seen = false
-    }
-  }
+  data() {
+    return {
+      form: {
+        password: "",
+        name: "",
+      },
+      checked: false,
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { max: 10, message: "不能大于10个字符", trigger: "blur" },
+        ],
+      },
+    };
+  },
+  methods: {
+    login() {
+      this.axiosInstance.post("user/login", this.form).then((resp) => {
+        if (resp.status === 200) {
+          this.$message({
+            message: "登录成功",
+            type: "success",
+          });
 
+          const sessionId = resp.data;
+          localStorage.setItem("SESSION_ID", sessionId);
+          this.$router.push("/factorymain");
+        } else {
+          this.$message({
+            message: "账号或密码错误",
+            type: "error",
+          });
+        }
+      });
+    },
+  },
 }
 </script>
-
 <style scoped>
-
-.el-header,
-.el-footer {
-  height: 60px;
-  background-color: grey;
+.loginbody {
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  background-position: center center;
+  overflow: auto;
+  background-repeat: no-repeat;
+  position: fixed;
+  line-height: 100%;
+  padding-top: 150px;
 }
 
-a {
-  text-decoration: none;
+.logindata {
+  width: 800px;
+  height: 380px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  transform: translate(-50%);
+  margin-left: 50%;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  display: flex;
 }
 
-.main_title {
-  font-size: 22px;
-  color: #fff;
-  height: 60px;
-  line-height: 60px;
-}
-
-.main {
-  min-height: 790px;
-}
-
-.user_title {
-  height: 60px;
+.logo-wrapper {
+  width: 50%;
+  background-color: #f7f7f7;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.my-label {
-  background: var(--el-color-success-light-9);
+
+.logo-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
 }
-.my-content {
-  background: var(--el-color-danger-light-9);
+.form-wrapper{
+  width: 48%;
+  margin-top: 0px;
+  margin-left: 20px;
+}
+
+.logintext {
+  margin-bottom: 20px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bolder;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.formdata {
+  margin-bottom: 20px;
+}
+
+.tool {
+  display: flex;
+  justify-content: space-between;
+  color: #606266;
+}
+
+.butt {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.shou {
+  cursor: pointer;
+  color: #606266;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.shou:hover {
+  color: #409EFF;
+
+}
+
+.el-form-item__label {
+  font-weight: bolder;
+  font-size: 15px;
+  text-align: left;
+}
+
+.el-button {
+  width: 100%;
+  margin-bottom: 10px;
 }
 </style>

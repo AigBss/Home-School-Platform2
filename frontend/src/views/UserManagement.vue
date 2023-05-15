@@ -2,9 +2,13 @@
   <div>
     <el-table :data="users" style="width: 100%">
       <el-table-column prop="id" label="ID" width="180"></el-table-column>
-      <el-table-column prop="username" label="Username" width="180"></el-table-column>
-      <el-table-column prop="password" label="Password" width="180"></el-table-column>
-      <el-table-column prop="userType" label="User Type" width="180"></el-table-column>
+      <el-table-column prop="username" label="用户名" width="180"></el-table-column>
+      <el-table-column prop="password" label="密码" width="180"></el-table-column>
+      <el-table-column prop="userType" label="用户类型" width="180">
+        <template #default="scope">
+          {{ userTypeToRole(scope.row.userType) }}
+        </template>
+      </el-table-column>
       <el-table-column
           fixed="right"
           label="Operations"
@@ -28,7 +32,11 @@
           <el-input v-model="form.password" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="User Type" :label-width="formLabelWidth">
-          <el-input v-model="form.userType" auto-complete="off"></el-input>
+          <el-select v-model="form.userType" placeholder="please select your zone">
+            <el-option label="管理员" value="1"></el-option>
+            <el-option label="教师" value="2"></el-option>
+            <el-option label="学生" value="3"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <template v-slot:footer>
@@ -62,7 +70,21 @@ export default {
   mounted() {
     this.fetchUsers()
   },
+
+
   methods: {
+    userTypeToRole(userType) {
+      switch (userType) {
+        case 1:
+          return '管理员';
+        case 2:
+          return '教师';
+        case 3:
+          return '学生';
+        default:
+          return '未知';
+      }
+    },
     async fetchUsers() {
       try {
         const response = await axios.get('http://localhost:8080/api/users')

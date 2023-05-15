@@ -26,6 +26,15 @@ onMounted(() => {
 })
 </script>
 
+<style>
+.el-main{
+width: 100%;
+height: 100%;
+/*text-align: center;*/
+background: #e4e7ed;
+padding: 0px !important;
+}
+</style>
 <!--<script>-->
 <!--import AppSidebar from "@/components/AppSidebar";-->
 

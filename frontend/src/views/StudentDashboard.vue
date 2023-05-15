@@ -1,10 +1,9 @@
 <template>
-
   <el-container class="layout-container-demo" style="height: 900px">
     <div>
       <div
-          style="background: rgb(84, 92, 100); height: 60px; width:200px; text-align: center; vertical-align: middle; display: table-cell">
-        1111
+          style="background: rgb(28, 31, 34); height: 60px; width:200px; text-align: center; vertical-align: middle; display: table-cell; color: white">
+        家校信息互通平台
       </div>
       <el-aside width="200px"
                 style="background-color: #545c64; height: 840px"
@@ -48,8 +47,8 @@
                 </el-icon>
                 成绩
               </template>
-              <el-menu-item index="4-2" @click="navigateToMyGrades">我的成绩</el-menu-item>
-              <el-menu-item index="4-3" @click="navigateToGradeAnalysis">成绩分析</el-menu-item>
+              <el-menu-item index="3-2" @click="navigateToMyGrades">我的成绩</el-menu-item>
+              <el-menu-item index="3-3" @click="navigateToGradeAnalysis">成绩分析</el-menu-item>
 
 
             </el-sub-menu>
@@ -61,7 +60,7 @@
                 文件
               </template>
 
-              <el-menu-item index="3-1" @click="gotoFileManagement">文件管理</el-menu-item>
+              <el-menu-item index="4-1" @click="gotoFileManagement">文件管理</el-menu-item>
             </el-sub-menu>
 
           </el-menu>
@@ -70,23 +69,29 @@
     </div>
     <el-container>
       <el-header
-          style="text-align: right; font-size: 16px;background-color: #545c64;color: white;class:'layout-header'">
+          style="text-align: right; font-size: 16px;background-color: #ffffff;color: black;class:'layout-header'">
+
         <div class="toolbar">
-          <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px;background-color: white"
+          <div>
+            <el-avatar :icon="UserFilled"/>
+          </div>
+          <span style="margin-left: 10px">{{ username }}</span>
+
+
+          <el-dropdown style="margin-left: 10px">
+            <el-icon color="black" style="margin-right: 8px; margin-top: 1px;color: black"
             >
-              <setting
-              />
+              <ArrowDownBold/>
             </el-icon>
+
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
-                <el-dropdown-item>Delete</el-dropdown-item>
+                <el-dropdown-item @click="logout">Quit</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <span>{{ username }}</span>
+
+
         </div>
       </el-header>
 
@@ -134,6 +139,7 @@ import {useRouter} from 'vue-router';
 import {Menu as IconMenu, Message, Setting} from '@element-plus/icons-vue';
 import axios from 'axios';
 import {ElMessage} from 'element-plus'
+import {UserFilled} from '@element-plus/icons-vue'
 
 const fileUploadRef = ref(null);
 
@@ -245,7 +251,7 @@ const goToClassNotifications = () => {
   router.push('/studentdashboard/classnotifications');
 };
 const gotoFileManagement = () => {
-  router.push('/filemanagement')
+  router.push('/studentdashboard/filemanagement')
 
 };
 const gotoMyChat = () => {
@@ -253,7 +259,7 @@ const gotoMyChat = () => {
 
 };
 const gotomyclass = () => {
-  router.push('/myclass')
+  router.push('/studentdashboard/myclass')
 
 }
 
@@ -261,6 +267,7 @@ const gotomyclass = () => {
 </script>
 
 <style scoped>
+
 .layout-container-demo .el-header {
   position: relative;
   background-color: var(--el-color-primary-light-7);
@@ -292,11 +299,20 @@ const gotomyclass = () => {
   background-color: #545c64;
 }
 
+.el-header {
+  text-align: right;
+  font-size: 16px;
+  background-color: #545c64;
+  color: white;
+}
+
+.layout-main {
+  margin-left: 150px;
+  margin-top: 50px;
+}
+
 
 </style>
-
-
-
 
 
 

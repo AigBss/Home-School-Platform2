@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <el-input v-model="newMessage" placeholder="Type a message" @keyup.enter="postMessage"></el-input>
-    <el-button type="primary" @click="postMessage">Send</el-button>
-    <el-table :data="messages" style="width: 100%">
-      <el-table-column prop="content" label="Message"></el-table-column>
-      <el-table-column prop="username" label="User Name"></el-table-column>
-      <el-table-column label="Operations">
-        <template #default="{ row }">
-          <el-button v-if="userId === row.userId" type="danger" @click="deleteMessage(row.id)">Delete</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+
+  <div class="mymessage">
+    <div class="messages">
+      <div v-for="(message, index) in messages" :key="index">
+        <div style="text-align: center"> {{ message.createdAtParsed }}</div>
+        <p><strong>{{ message.username }}:</strong> {{ message.content }} </p>
+
+      </div>
+    </div>
+    <div class="send-message">
+
+      <el-input v-model="newMessage" placeholder="输入新的消息" type="textarea"></el-input>
+
+    </div>
+    <div style="float: right; margin-top: 10px">
+      <el-button type="primary" @click="postMessage">发送</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import {ref} from 'vue'
 import axios from 'axios'
 import {useRoute} from "vue-router"
 
@@ -40,17 +45,31 @@ export default {
 
     const fetchMessages = async () => {
       const response = await axios.get(`http://localhost:8080/group-chat/${groupId.value}/messages`)
-      for (let i = 0; i < response.data.length; i++){
+      for (let i = 0; i < response.data.length; i++) {
         let gc = response.data[i];
         const user = await axios.get(`http://localhost:8080/api/users/${gc.senderId}`);
         gc.username = user.data.username
+        let date = new Date(gc.createdAt);
+        let y = date.getFullYear();
+        let MM = date.getMonth() + 1;
+        MM = MM < 10 ? ('0' + MM) : MM;
+        let d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        let h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        let m = date.getMinutes();
+        m = m < 10 ? ('0' + m) : m;
+        let s = date.getSeconds();
+        s = s < 10 ? ('0' + s) : s;
+        let re = y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+        gc.createdAtParsed = re;
         response.data[i] = gc;
       }
       messages.value = response.data
     }
 
     const postMessage = async () => {
-      const message = { content: newMessage.value, senderId: userId.value, groupId: groupId.value}
+      const message = {content: newMessage.value, senderId: userId.value, groupId: groupId.value}
       const response = await axios.post('http://localhost:8080/group-chat/message', message)
       if (response.status === 200) {
         fetchMessages()
@@ -72,7 +91,8 @@ export default {
       messages,
       newMessage,
       postMessage,
-      deleteMessage
+      deleteMessage,
+      // parseTime,
     }
   }
 }
@@ -92,4 +112,21 @@ h2 {
   flex: 1;
   margin-right: 10px;
 }
+
+.mymessage {
+  padding: 20px;
+}
+
+.messages {
+  height: 82vh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.send-message {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 </style>

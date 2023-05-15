@@ -4,7 +4,7 @@
       <div class="layout-main">
         <h1>发布通知</h1>
 
-        <el-form  :model="publishNotificationForm" label-width="120px">
+        <el-form  :model="publishNotificationForm" label-width="120px" style="margin-right: 200px">
           <el-form-item label="通知标题">
             <el-input v-model="publishNotificationForm.title"></el-input>
           </el-form-item>
@@ -93,4 +93,6 @@ const submitPublishNotification = async () => {
   margin-left: 150px;
   margin-top: 50px;
 }
+
+
 </style>

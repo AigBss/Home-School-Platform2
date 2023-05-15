@@ -1,27 +1,32 @@
 <template>
-  <div class="file-management">
-    <div class="file-management-toolbar">
-      <input type="file" ref="fileInput" @change="handleFileUpload" style="display:none" />
-      <el-button type="primary" @click="uploadFile">上传文件</el-button>
-    </div>
-    <el-table :data="fileList" stripe border>
-      <el-table-column prop="filename" label="文件名" width="300"></el-table-column>
-      <el-table-column prop="userid" label="上传者" width="200"></el-table-column>
-      <el-table-column label="操作" width="150">
-        <template #default="scope">
-          <el-button type="text" @click="downloadFile(scope.row)">下载</el-button>
-          <el-button
-              type="text"
-              @click="deleteFile(scope.row)"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
+  <el-container>
+    <el-main>
+      <div class="file-management">
+        <div class="file-management-toolbar">
+          <input type="file" ref="fileInput" @change="handleFileUpload" style="display:none"/>
+          <el-button type="primary" @click="uploadFile">上传文件</el-button>
+        </div>
+        <el-table :data="fileList" stripe border>
+          <el-table-column prop="filename" label="文件名" width="300"></el-table-column>
+          <el-table-column prop="userid" label="上传者ID" width="200"></el-table-column>
+          <el-table-column label="操作" width="150">
+            <template #default="scope">
+              <el-button type="text" @click="downloadFile(scope.row)">下载</el-button>
+              <el-button
+                  type="text"
+                  @click="deleteFile(scope.row)"
+              >删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from 'axios';
 
 const fileList = ref([]);
@@ -66,7 +71,7 @@ const downloadFile = (file) => {
 
 const deleteFile = async (file) => {
   try {
-    await axios.delete(`http://localhost:8080/api/files/${file.id}`, { params: { userId: '1' } }); // Replace with the actual user ID
+    await axios.delete(`http://localhost:8080/api/files/${file.id}`, {params: {userId: '1'}}); // Replace with the actual user ID
     getAllFiles();
   } catch (error) {
     console.error(error);
