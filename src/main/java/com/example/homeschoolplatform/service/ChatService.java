@@ -15,4 +15,5 @@ public interface ChatService  {
 
     List<Chat> getChatsByUserId(int userId);
 
+    Chat getChatInfoByChatId(int chatId);
 }

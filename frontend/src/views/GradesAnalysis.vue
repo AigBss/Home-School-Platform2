@@ -4,8 +4,12 @@
       <router-link to="/studentdashboard/studentprofile">返回</router-link>
     </div>
     <div class="chart-section">
-      <h3>分数变化折线图（多个科目和总分）</h3>
+      <h3>分数变化折线图（多个科目）</h3>
       <div ref="gradesChartLine" class="chart-container"></div>
+    </div>
+    <div class="chart-section">
+      <h3>总分变化折线图</h3>
+      <div ref="gradesChartLineTotal" class="chart-container"></div>
     </div>
     <div class="chart-section">
       <h3>科目成绩柱状图</h3>
@@ -17,6 +21,7 @@
     </div>
   </div>
 </template>
+
 
 
 <script>
@@ -36,6 +41,8 @@ export default {
     this.initLineChart();
     this.initBarChart();
     this.initPieChart();
+    this.initTotalLineChart();
+
   },
   methods: {
     async fetchGradesData() {
@@ -89,17 +96,7 @@ export default {
         series: seriesData,
       };
 
-      const totalScoresLine = {
-        name: '总分',
-        type: 'line',
-        data: terms.map((term) => {
-          const termData = this.gradesData.filter((item) => item.term === term);
-          const totalScore = termData.reduce((acc, item) => acc + item.score, 0);
-          return totalScore;
-        }),
-      };
 
-      optionLine.series.push(totalScoresLine);
       chartLine.setOption(optionLine);
     },
     initBarChart() {
@@ -120,6 +117,7 @@ export default {
           data,
         };
       });
+
 
       const optionBar = {
         tooltip: {},
@@ -177,6 +175,39 @@ export default {
 
       chartPie.setOption(optionPie);
     },
+
+    initTotalLineChart() {
+      const chartLineTotal = echarts.init(this.$refs.gradesChartLineTotal);
+      const terms = Array.from(new Set(this.gradesData.map((item) => item.term)));
+
+      const totalScoresLine = {
+        name: '总分',
+        type: 'line',
+        data: terms.map((term) => {
+          const termData = this.gradesData.filter((item) => item.term === term);
+          const totalScore = termData.reduce((acc, item) => acc + item.score, 0);
+          return totalScore;
+        }),
+      };
+
+      const optionLineTotal = {
+        tooltip: {},
+        legend: {
+          data: ['总分'],
+        },
+        xAxis: {
+          type: 'category',
+          data: terms,
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [totalScoresLine],
+      };
+
+      chartLineTotal.setOption(optionLineTotal);
+    },
+
   },
 }
 

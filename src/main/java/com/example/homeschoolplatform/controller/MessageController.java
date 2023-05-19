@@ -18,9 +18,15 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private WebSocket webSocket;
+
     @PostMapping("/send")
     public ResponseEntity<Message> sendMessage(@RequestBody Message message) {
         Message sentMessage = messageService.sendMessage(message);
+
+        // 找到接收者的ws会话，从服务端推请求给网页
+        webSocket.sendMessageToSomeOne(message.getChatId());
         return new ResponseEntity<>(sentMessage, HttpStatus.OK);
     }
     @GetMapping("/chat/{chatId}")

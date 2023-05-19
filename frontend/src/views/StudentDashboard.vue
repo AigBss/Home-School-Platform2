@@ -220,7 +220,10 @@ const showEditPasswordDialog = ref(false);
 const showJoinClassDialog = ref(false);
 const classToJoinId = ref(null);
 
+const logout = () => {
+  router.push('/')
 
+}
 const joinClass = async () => {
   console.log('in')
   console.log(classToJoinId)

@@ -27,19 +27,33 @@ const messages = ref([]);
 const route = useRoute();
 let chatId;
 let timer;
+let webSocketObject: WebSocket;
 
 onMounted(() => {
   chatId = route.params.chatId;
   loadMessages();
   timer = setInterval(loadMessages, 5000);
+
+  webSocketInit() // 建立ws连接
 });
 
 onBeforeUnmount(() => {
+  webSocketObject.close(); // 关闭ws连接
   clearInterval(timer);
 });
 
 const loadMessages = async () => {
   const response = await axios.get(`http://localhost:8080/api/message/chat/${chatId}`);
+
+  function compare(property: string){
+    return function(a,b){
+      const value1 = a[property];
+      const value2 = b[property];
+      return value1 - value2;  //降序只需要  return value2- value1
+    }
+  }
+  response.data.sort(compare('createdAt'))
+
   messages.value = response.data;
 };
 
@@ -60,6 +74,50 @@ const sendMessage = async () => {
   newMessageText.value = '';
   loadMessages();
 };
+
+
+const webSocketInit= async () => {
+  const userString = localStorage.getItem('user');
+  let senderId;
+  if (userString) {
+    const user = JSON.parse(userString);
+    if (user && user.id) {
+      senderId = user.id;
+    }
+  }
+  const webSocketUrl = 'ws://localhost:8080/websocket/'+senderId
+  webSocketObject = new WebSocket(webSocketUrl);
+  webSocketObject.onopen = webSocketOnOpen
+  webSocketObject.onmessage = webSocketOnMessage
+  webSocketObject.onerror = webSocketOnError
+  webSocketObject.onclose = webSocketOnClose
+}
+const webSocketOnOpen= async (e) => {
+  console.log('与服务端连接打开->',e)
+}
+const webSocketOnMessage= async (e) => {
+  console.log('来自服务端的消息->',e)
+  if (e.data === "please reload") {
+    loadMessages()
+  }
+}
+const webSocketOnError= async (e) => {
+  console.log('与服务端连接异常->',e)
+}
+const webSocketOnClose= async (e) => {
+  console.log('与服务端连接关闭->',e)
+}
+const handleSendButton= async (e) =>  {
+  const username = username
+  const message = sendMessage
+  webSocketObject.send(JSON.stringify({
+    id: 1,
+    message,
+    username,
+    time: new Date().getTime()
+  }))
+  this.sendMessage = ''
+}
 
 </script>
 

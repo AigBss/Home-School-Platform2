@@ -60,4 +60,9 @@ public class ChatServiceImpl implements ChatService {
     public List<Chat> getChatsByUserId(int userId) {
         return chatMapper.selectChatsByUserId(userId);//需要的类型:Long提供的类型:Integer
     }
+
+    @Override
+    public Chat getChatInfoByChatId(int chatId) {
+        return chatMapper.selectByPrimaryKey(Long.valueOf(chatId));
+    }
 }

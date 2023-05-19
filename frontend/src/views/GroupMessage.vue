@@ -45,6 +45,15 @@ export default {
 
     const fetchMessages = async () => {
       const response = await axios.get(`http://localhost:8080/group-chat/${groupId.value}/messages`)
+      function compare(property){
+        return function(a,b){
+          const value1 = a[property];
+          const value2 = b[property];
+          return value1 - value2;  //降序只需要  return value2- value1
+        }
+      }
+      response.data.sort(compare('createdAt'))
+
       for (let i = 0; i < response.data.length; i++) {
         let gc = response.data[i];
         const user = await axios.get(`http://localhost:8080/api/users/${gc.senderId}`);
